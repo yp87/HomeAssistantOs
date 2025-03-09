@@ -1,7 +1,24 @@
+# Ignore all files
 *
+
+# Do not ignore directories, so we can apply rules within them
 !*/
+
+# Except YAML files in any directory
 !*.yaml
-.storage
+
+# Ignore secret.yaml, known devices and alarm specifically
 secrets.yaml
 known_devices.yaml
 *alarm.yaml
+
+# Ignore storage
+.storage/
+
+# ignore the custom_components
+custom_components/
+
+# Ignore Python build and cache files
+*.pyc
+*.pyo
+__pycache__/
