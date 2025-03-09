@@ -16,7 +16,7 @@ known_devices.yaml
 .storage/
 
 # ignore the custom_components
-custom_components/
+custom_components/**
 
 # Ignore Python build and cache files
 *.pyc
