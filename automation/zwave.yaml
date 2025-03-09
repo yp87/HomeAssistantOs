@@ -96,7 +96,7 @@
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
-        device_id: "6b1eccc8c4bbb9613bae53ed04d11e0d"
+        device_id: "c67fd05c899d2f3d80ac784e7b648614"
         value: "KeyPressed2x"
   action:
     - service: >
