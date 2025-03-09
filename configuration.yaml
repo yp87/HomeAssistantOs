@@ -10,6 +10,8 @@ http:
 frontend:
   themes: !include_dir_merge_named themes
 
+schedule:
+
 recorder:
   db_url: !secret mariadb_url
   purge_keep_days: 1825
@@ -26,8 +28,106 @@ device_tracker:
     username: !secret tracker_account
     max_gps_accuracy: 100
 
-automation: !include automations.yaml
-script: !include scripts.yaml
+google_assistant:
+  project_id: !secret project_id
+  service_account: !include service_account.json
+  report_state: true
+  expose_by_default: false
+  entity_config:
+    switch.front_yard:
+      expose: true
+      name: Extérieur
+      aliases:
+        - Devant
+        - Avant
+    light.master_bathroom_ceiling:
+      expose: true
+      name: Salle de bain
+      aliases:
+        - Plafond de la salle de bain
+    light.master_bathroom_mirror:
+      expose: true
+      name: Miroir de la salle de bain
+    switch.master_bathroom_fan:
+      expose: true
+      name: Fan de la salle de bain
+      aliases:
+        - Fan
+    light.kitchen:
+      expose: true
+      name: Cuisine
+    light.living_room:
+      expose: true
+      name: Salon
+    #light.twinkly_a80df9:
+    #  expose: true
+    #  name: Sapin
+    light.upper_stairs:
+      expose: true
+      name: Escalier
+    light.ground_floor_hallway:
+      expose: true
+      name: corridor
+    cover.kitchen_window_blind:
+      expose: true
+      name: Fenêtre de la cuisine
+    cover.patio_door_blind:
+      expose: true
+      name: Fenêtre du patio
+    cover.living_room_window_blind:
+      expose: true
+      name: Fenêtre du salon
+    cover.office_window_blind:
+      expose: true
+      name: Fenêtre du bureau
+    climate.main_floor:
+      expose: true
+      name: Thermostat
+
+tts:
+  - platform: google_translate
+
+notify:
+  - name: all_people
+    platform: group
+    services:
+      - service: yan
+      - service: cath
+  - name: yan
+    platform: group
+    services:
+      - service: pushover
+        data:
+          target: pixel7
+
+shell_command:
+  set_garage_camera_time: !secret camera_garage_set_time_template
+  set_front_window_camera_time: !secret camera_front_window_set_time_template
+  set_rear_window_camera_time: !secret camera_rear_window_set_time_template
+  set_parking_camera_time: !secret camera_parking_set_time_template
+
+hyperion_priority:
+  host: !secret hyperion_ip_address
+  port: !secret hyperion_port
+
+gemini_api:
+  api_key: !secret gemini_api_key
+
+rest_command:
+  garage_camera_output:
+    url: !secret camera_garage_output_url
+    username: !secret camera_garage_username
+    password: !secret camera_garage_password
+
+automation: !include_dir_merge_list automation
+group: !include groups.yaml
+input_boolean: !include input_boolean.yaml
+input_button: !include input_button.yaml
+script: !include_dir_merge_named script
+sensor: !include_dir_merge_list sensor
+switch: !include_dir_merge_list switch
+template: !include_dir_merge_list template
+command_line: !include_dir_merge_list command_line
 scene: !include scenes.yaml
 
 mqtt:
