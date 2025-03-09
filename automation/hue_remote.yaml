@@ -4,7 +4,7 @@
   trigger:
     platform: time
     at: "19:00:00"
-  action:
+  actions:
     service: homeassistant.reload_config_entry
     data:
       entry_id: 1742bde87dfd47a5a80d11af5a0bcd86
@@ -20,7 +20,7 @@
         subtype: 4
   mode: single
   max_exceeded: silent
-  action:
+  actions:
     - service: script.turn_on
       data:
         entity_id: script.lock_door
@@ -74,7 +74,7 @@
         subtype: 1
   mode: single
   max_exceeded: silent
-  action:
+  actions:
     - service: script.morning
     - delay:
         seconds: 10

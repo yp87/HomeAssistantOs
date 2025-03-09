@@ -14,7 +14,7 @@
       {% else %}
         Cath
       {% endif %}
-  action:
+  actions:
     - service: notify.tv
       data:
         message: "{{ name }}'s phone is ringing"
@@ -33,7 +33,7 @@
         Cath
       {% endif %}
   mode: queued
-  action:
+  actions:
     - service: notify.tv
       data:
         message: "{{ name }} received a message"
@@ -43,12 +43,12 @@
   trigger:
     - platform: state
       entity_id: remote.salon_tv
-      to: 'on'
+      to: "on"
   condition:
     condition: state
     entity_id: select.yharmony_activities
     state: "power_off"
-  action:
+  actions:
     - service: select.select_option
       data:
         entity_id: select.yharmony_activities
@@ -59,12 +59,12 @@
   trigger:
     - platform: state
       entity_id: remote.salon_tv
-      to: 'off'
+      to: "off"
   condition:
     condition: state
     entity_id: select.yharmony_activities
     state: "Watch TV"
-  action:
+  actions:
     - service: select.select_option
       data:
         entity_id: select.yharmony_activities
@@ -75,12 +75,12 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.xbox
-      to: 'on'
+      to: "on"
   condition:
     condition: state
     entity_id: select.yharmony_activities
     state: "power_off"
-  action:
+  actions:
     - service: select.select_option
       data:
         entity_id: select.yharmony_activities
@@ -91,12 +91,12 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.xbox
-      to: 'off'
+      to: "off"
   condition:
     condition: state
     entity_id: select.yharmony_activities
     state: "XBOX"
-  action:
+  actions:
     - service: select.select_option
       data:
         entity_id: select.yharmony_activities
@@ -115,7 +115,7 @@
       {% else %}
         119
       {% endif %}
-  action:
+  actions:
     - if:
         - '{{ trigger.to_state.state == "on" }}'
       then:
@@ -127,11 +127,11 @@
               {% else %}
                 Rainbow swirl fast
               {% endif %}
-            priority: '{{ effect_priority }}'
+            priority: "{{ effect_priority }}"
       else:
         - service: hyperion_priority.clear_priority
           data:
-            priority: '{{ effect_priority }}'
+            priority: "{{ effect_priority }}"
 
 - alias: Hyperion phone notification
   trigger:
@@ -153,23 +153,23 @@
         124
       {% endif %}
   mode: queued
-  action:
+  actions:
     - service: hyperion_priority.apply_effect
       data:
-        effect: '{{ effect }}'
-        priority: '{{ effect_priority }}'
+        effect: "{{ effect }}"
+        priority: "{{ effect_priority }}"
     - delay: "00:00:04"
     - service: hyperion_priority.clear_priority
       data:
-        priority: '{{ effect_priority }}'
+        priority: "{{ effect_priority }}"
 
 - alias: tv turns on
   id: tv_turns_on
   trigger:
     - platform: state
       entity_id: media_player.tv
-      to: 'on'
-  action:
+      to: "on"
+  actions:
     - service: hyperion_priority.set_usb_capture
       data:
         usb_capture: true
@@ -179,8 +179,8 @@
   trigger:
     - platform: state
       entity_id: media_player.tv
-      to: 'off'
-  action:
+      to: "off"
+  actions:
     - service: hyperion_priority.set_usb_capture
       data:
         usb_capture: false
@@ -190,21 +190,21 @@
   trigger:
     - platform: event
       event_type: denon_hdr
-  action:
+  actions:
     - service: hyperion_priority.set_hdr_mode
       data:
-        hdr_mode: '{{ trigger.event.data.value }}'
+        hdr_mode: "{{ trigger.event.data.value }}"
 
 - alias: Query denon hdr mode
   id: query_denon_hdr_mode
   trigger:
     - platform: time_pattern
-      seconds: '/30'
+      seconds: "/30"
   condition:
     - condition: state
       entity_id: media_player.denon_avr_x3500h
       state: "on"
-  action:
+  actions:
     - service: denonavr_hdr.get_command
       data:
         command: /goform/formiPhoneAppDirect.xml?SSINFSIGHDR ?

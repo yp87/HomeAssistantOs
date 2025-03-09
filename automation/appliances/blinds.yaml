@@ -35,7 +35,7 @@
         entity_id: climate.main_floor
         attribute: preset_mode
         state: sleep
-  action:
+  actions:
     - service: cover.open_cover
       entity_id: group.all_blinds
 
@@ -48,7 +48,7 @@
       entity_id: climate.main_floor
       attribute: preset_mode
       to: sleep
-  action:
+  actions:
     - service: cover.close_cover
       data_template:
         entity_id: >
@@ -67,7 +67,7 @@
   condition:
     - condition: time
       after: "18:00:00"
-  action:
+  actions:
     - service: cover.close_cover
       entity_id: cover.office_window_blind
 
@@ -84,7 +84,7 @@
         - mon
         - wed
         - fri
-  action:
+  actions:
     - service: >
         {% if trigger.now.strftime('%H:%M:%S') == '07:00:00' %}
           switch.turn_on
@@ -104,7 +104,7 @@
         - mon
         - wed
         - fri
-  action:
+  actions:
     - service: switch.turn_on
       entity_id: switch.vertical_toggle_control_office
 
@@ -119,6 +119,6 @@
         - mon
         - wed
         - fri
-  action:
+  actions:
     - service: switch.turn_off
       entity_id: switch.vertical_toggle_control_office

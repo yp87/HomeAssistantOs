@@ -5,7 +5,7 @@
     entity_id: input_boolean.halloween
     to: "on"
   mode: parallel
-  action:
+  actions:
     - repeat:
         sequence:
           - service: switch.turn_off

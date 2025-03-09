@@ -4,20 +4,20 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.fridge_door
-      to: 'on'
-      for: '00:01:00'
+      to: "on"
+      for: "00:01:00"
   mode: restart
-  action:
+  actions:
     - repeat:
         sequence:
           - service: script.notify_and_speak
             data:
               message: La porte du frigo est ouverte.
-          - delay: '00:00:10'
+          - delay: "00:00:10"
         until:
           - condition: state
             entity_id: binary_sensor.fridge_door
-            state: 'off'
+            state: "off"
     - service: script.notify_and_speak
       data:
         message: La porte du frigo est fermée.

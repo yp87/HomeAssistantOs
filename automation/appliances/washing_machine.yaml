@@ -5,7 +5,7 @@
     - platform: state
       entity_id: binary_sensor.washer_leak_sensor
       to: "on"
-  action:
+  actions:
     - service: switch.turn_off
       entity_id: switch.washer_power
     - service: hyperion_priority.apply_effect
@@ -25,7 +25,7 @@
         until:
           - condition: state
             entity_id: binary_sensor.washer_leak_sensor
-            state: 'off'
+            state: "off"
     - service: notify.all_people
       data:
         message: Le problème est maintenant réglé.

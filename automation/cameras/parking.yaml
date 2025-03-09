@@ -3,14 +3,14 @@
   id: sync_parking_camera_time
   trigger:
     - platform: time
-      at: '00:00:00'
+      at: "00:00:00"
     - platform: homeassistant
       event: start
   condition:
     condition: state
     entity_id: camera.parking
     state: idle
-  action:
+  actions:
     - service: shell_command.set_parking_camera_time
 
 - alias: Notify when motion in parking
@@ -20,7 +20,7 @@
   trigger:
     - trigger: mqtt
       topic: "camera/parking/motion"
-  action:
+  actions:
     - delay: "00:00:01"
     - service: gemini_api.generate_text
       continue_on_error: true

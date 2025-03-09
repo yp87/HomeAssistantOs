@@ -3,14 +3,14 @@
   id: sync_garage_camera_time
   trigger:
     - platform: time
-      at: '00:00:00'
+      at: "00:00:00"
     - platform: homeassistant
       event: start
   condition:
     condition: state
     entity_id: camera.garage
     state: idle
-  action:
+  actions:
     - service: shell_command.set_garage_camera_time
 
 - alias: Notify when motion in garage
@@ -29,8 +29,8 @@
         - not:
             - condition: state
               entity_id: alarm_control_panel.home_alarm
-              state: 'disarmed'
-  action:
+              state: "disarmed"
+  actions:
     - service: camera.snapshot
       data:
         entity_id: camera.garage
@@ -48,5 +48,5 @@
   trigger:
     - platform: state
       entity_id: input_button.garage_door
-  action:
+  actions:
     - service: rest_command.garage_camera_output

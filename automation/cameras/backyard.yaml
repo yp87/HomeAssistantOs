@@ -3,14 +3,14 @@
   id: sync_backyard_camera_time
   trigger:
     - platform: time
-      at: '00:00:00'
+      at: "00:00:00"
     - platform: homeassistant
       event: start
   condition:
     condition: state
     entity_id: camera.backyard
     state: idle
-  action:
+  actions:
     - service: shell_command.set_rear_window_camera_time
 
 - alias: Notify when motion in backyard
@@ -27,14 +27,14 @@
         {{ (as_timestamp(now()) -
             as_timestamp(states.cover.living_room_window_blind.last_changed))
            > 20 }}
-  action:
+  actions:
     - service: camera.snapshot
       data:
         entity_id: camera.backyard
         filename: /media/backyard.jpg
     - service: notify.yan
       data:
-        message: 'Backyard Motion detected'
+        message: "Backyard Motion detected"
         data:
           attachment: /media/backyard.jpg
     - delay: "00:05:00"

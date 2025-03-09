@@ -3,7 +3,7 @@
   trigger:
     - platform: sun
       event: sunset
-  action:
+  actions:
     service: switch.turn_on
     entity_id: switch.light_front
 
@@ -14,7 +14,7 @@
   condition:
     condition: sun
     before: sunrise
-  action:
+  actions:
     service: switch.turn_on
     entity_id: switch.light_front
 
@@ -24,7 +24,7 @@
       at: "22:00:00"
     - platform: sun
       event: sunrise
-  action:
+  actions:
     service: switch.turn_off
     entity_id: switch.light_front
 
@@ -36,7 +36,7 @@
       event_data:
         device_id: "e8eb5d524639cae23921eacd145bde9f"
         event_label: "Keypad lock operation"
-  action:
+  actions:
     - service: light.turn_off
       entity_id: switch.entrance_light
 
@@ -55,7 +55,7 @@
       - condition: sun
         before: sunrise
         before_offset: "01:00:00"
-  action:
+  actions:
     - service: script.auto_switch_on
       data:
         duration_seconds: 300
@@ -71,7 +71,7 @@
       to: "home"
     - platform: state
       entity_id: alarm_control_panel.home_alarm
-  action:
+  actions:
     - service: >
         {% if is_state('person.cath', 'home') and
            is_state('alarm_control_panel.home_alarm', 'disarmed') %}
@@ -101,7 +101,7 @@
               attribute: brightness
               state: 103
   mode: restart
-  action:
+  actions:
     - service: light.turn_on
       data:
         entity_id: light.second_floor_hallway_light
@@ -136,7 +136,7 @@
               attribute: brightness
               state: 103
   mode: restart
-  action:
+  actions:
     - service: light.turn_on
       data:
         entity_id: light.frederique_bathroom

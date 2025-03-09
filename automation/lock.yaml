@@ -1,37 +1,37 @@
 ---
-- alias: 'Auto Lock Front Door'
+- alias: "Auto Lock Front Door"
   trigger:
     - platform: state
       entity_id: lock.front_door_lock
-      to: 'unlocked'
+      to: "unlocked"
       for:
         minutes: 5
     - platform: state
       entity_id: binary_sensor.front_door
-      to: 'off'
+      to: "off"
       for:
         minutes: 5
   condition:
     - condition: state
       entity_id: binary_sensor.front_door
-      state: 'off'
+      state: "off"
       for:
         minutes: 4
-  action:
+  actions:
     - service: script.lock_door
       data:
         lock_id: lock.front_door_lock
 
-- alias: 'Auto unlock Front Door if door is open'
+- alias: "Auto unlock Front Door if door is open"
   trigger:
     - platform: state
       entity_id: lock.front_door_lock
-      to: 'locked'
+      to: "locked"
   condition:
     - condition: state
       entity_id: binary_sensor.front_door
-      state: 'on'
-  action:
+      state: "on"
+  actions:
     - service: lock.unlock
       data:
         entity_id: lock.front_door_lock

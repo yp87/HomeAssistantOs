@@ -4,7 +4,7 @@
   trigger:
     - platform: state
       entity_id: input_button.sync_photo_yan
-  action:
+  actions:
     - service: joaoapps_join.android_server_send_tasker
       data:
         command: "SyncPhotoYan"

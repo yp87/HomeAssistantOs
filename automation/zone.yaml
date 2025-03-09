@@ -7,8 +7,8 @@
       event: leave
   condition:
     - condition: time
-      before: '10:00:00'
-  action:
+      before: "10:00:00"
+  actions:
     service: light.turn_off
     entity_id: all
 
@@ -21,8 +21,8 @@
   condition:
     - condition: time
       after: !secret yan_leave_work_time
-      before: '23:00:00'
-  action:
+      before: "23:00:00"
+  actions:
     service: notify.cath
     data:
       message: >
@@ -35,7 +35,7 @@
       entity_id: person.cath
       zone: zone.work_cath
       event: leave
-  action:
+  actions:
     service: notify.yan
     data:
       message: >
