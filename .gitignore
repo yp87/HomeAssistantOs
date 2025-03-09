@@ -1,0 +1,7 @@
+*
+!*/
+!*.yaml
+.storage
+secrets.yaml
+known_devices.yaml
+*alarm.yaml

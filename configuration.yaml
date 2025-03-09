@@ -1,0 +1,37 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+recorder:
+  db_url: !secret mariadb_url
+  purge_keep_days: 1825
+  exclude:
+    domains:
+      - automation
+      - media_player
+    entities:
+      - light.table_de_chevet_de_yan
+      - light.table_de_chevet_de_cath
+
+device_tracker:
+  - platform: google_maps
+    username: !secret tracker_account
+    max_gps_accuracy: 100
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  sensor: !include_dir_merge_list mqtt/sensor
+  switch: !include_dir_merge_list mqtt/switch
+  binary_sensor: !include_dir_merge_list mqtt/binary_sensor
+  alarm_control_panel: !include_dir_merge_list mqtt/alarm_control_panel
