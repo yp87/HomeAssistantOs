@@ -1,0 +1,34 @@
+---
+- alias: Washer leak detected
+  id: Washer_leak_detected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.washer_leak_sensor
+      to: "on"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.washer_power
+    - service: hyperion_priority.apply_effect
+      data:
+        effect: Knight rider
+        priority: 100
+    - service: notify.tv
+      data:
+        message: "Washing machine is leaking"
+    - repeat:
+        sequence:
+          - service: notify.all_people
+            data:
+              message: "De l'eau est détectée dans le bac de la laveuse."
+          - delay:
+              seconds: 10
+        until:
+          - condition: state
+            entity_id: binary_sensor.washer_leak_sensor
+            state: 'off'
+    - service: notify.all_people
+      data:
+        message: Le problème est maintenant réglé.
+    - service: hyperion_priority.clear_priority
+      data:
+        priority: 100

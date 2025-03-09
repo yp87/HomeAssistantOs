@@ -1,0 +1,29 @@
+---
+all_light_switches:
+  name: All light switches
+  entities:
+    - switch.light_front
+    - switch.master_bathroom_fan
+    - switch.entrance_light
+
+zwave_dimmers_default_low:
+  entities:
+    - light.kitchen_main_light
+    - light.living_room_main_light
+    - light.salle_de_lecture
+
+zwave_dimmers_default_exclude:
+  entities:
+    - light.frederique_bedroom
+
+all_people:
+  entities:
+    - person.yan
+    - person.cath
+
+all_blinds:
+  entities:
+    - cover.kitchen_window_blind
+    - cover.patio_door_blind
+    - cover.living_room_window_blind
+    - cover.office_window_blind

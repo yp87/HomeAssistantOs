@@ -1,0 +1,14 @@
+---
+- alias: Sync front window camera time
+  id: sync_front_window_camera_time
+  trigger:
+    - platform: time
+      at: '00:00:00'
+    - platform: homeassistant
+      event: start
+  condition:
+    condition: state
+    entity_id: camera.front_window
+    state: idle
+  action:
+    - service: shell_command.set_front_window_camera_time

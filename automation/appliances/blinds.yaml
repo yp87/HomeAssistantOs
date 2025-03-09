@@ -1,0 +1,124 @@
+---
+- alias: Open blinds in the morning
+  id: open_blinds_in_the_morning
+  trigger:
+    - platform: sun
+      event: sunrise
+    - platform: state
+      entity_id: climate.main_floor
+      attribute: preset_mode
+      from: sleep
+    - platform: time
+      at: "06:30:00"
+    - platform: time
+      at: "07:00:00"
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+    - or:
+        - condition: time
+          after: "06:30:00"
+          weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+        - condition: time
+          after: "07:00:00"
+          weekday:
+            - sat
+            - sun
+    - not:
+        condition: state
+        entity_id: climate.main_floor
+        attribute: preset_mode
+        state: sleep
+  action:
+    - service: cover.open_cover
+      entity_id: group.all_blinds
+
+- alias: Close blinds in the evening
+  id: close_blinds_in_the_evening
+  trigger:
+    - platform: sun
+      event: sunset
+    - platform: state
+      entity_id: climate.main_floor
+      attribute: preset_mode
+      to: sleep
+  action:
+    - service: cover.close_cover
+      data_template:
+        entity_id: >
+          {% if trigger.platform == 'sun' and state_attr('cover.kitchen_window_blind', 'current_position') | int == 30 %}
+            {{ expand('group.all_blinds') | map(attribute='entity_id') | reject('equalto', 'cover.kitchen_window_blind') | list | join(', ') }}
+          {% else %}
+            group.all_blinds
+          {% endif %}
+
+- alias: CLose office blind when kid goes to sleep
+  id: cLose_office_blind_when_kid_goes_to_sleep
+  trigger:
+    - platform: state
+      entity_id: switch.baby_monitor
+      to: "on"
+  condition:
+    - condition: time
+      after: "18:00:00"
+  action:
+    - service: cover.close_cover
+      entity_id: cover.office_window_blind
+
+- alias: Sync office blind with sun when working
+  id: sync_office_blind_with_sun_when_working
+  trigger:
+    - platform: time
+      at: "07:00:00"
+    - platform: time
+      at: "16:20:00"
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - wed
+        - fri
+  action:
+    - service: >
+        {% if trigger.now.strftime('%H:%M:%S') == '07:00:00' %}
+          switch.turn_on
+        {% elif trigger.now.strftime('%H:%M:%S') == '16:20:00' %}
+          switch.turn_off
+        {% endif %}
+      entity_id: switch.vertical_toggle_control_office
+
+- alias: Turn on office blind control in the morning on work from home days
+  id: turn_on_office_blind_control_in_the_morning_on_work_from_home_days
+  trigger:
+    - platform: time
+      at: "07:00:00"
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - wed
+        - fri
+  action:
+    - service: switch.turn_on
+      entity_id: switch.vertical_toggle_control_office
+
+- alias: Turn off office blind control in the evening on work from home days
+  id: turn_off_office_blind_control_in_the_evening_on_work_from_home_days
+  trigger:
+    - platform: time
+      at: "16:20:00"
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - wed
+        - fri
+  action:
+    - service: switch.turn_off
+      entity_id: switch.vertical_toggle_control_office

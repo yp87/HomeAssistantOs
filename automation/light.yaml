@@ -1,0 +1,152 @@
+---
+- alias: Turn on front light at sunset
+  trigger:
+    - platform: sun
+      event: sunset
+  action:
+    service: switch.turn_on
+    entity_id: switch.light_front
+
+- alias: Turn on front light in the morning
+  trigger:
+    - platform: time
+      at: "05:30:00"
+  condition:
+    condition: sun
+    before: sunrise
+  action:
+    service: switch.turn_on
+    entity_id: switch.light_front
+
+- alias: Turn off front light at 10pm or sunrise
+  trigger:
+    - platform: time
+      at: "22:00:00"
+    - platform: sun
+      event: sunrise
+  action:
+    service: switch.turn_off
+    entity_id: switch.light_front
+
+- alias: turn off entrance light when exiting
+  id: turn_off_entrance_light_when_exiting
+  trigger:
+    - platform: event
+      event_type: zwave_js_notification
+      event_data:
+        device_id: "e8eb5d524639cae23921eacd145bde9f"
+        event_label: "Keypad lock operation"
+  action:
+    - service: light.turn_off
+      entity_id: switch.entrance_light
+
+- alias: turn on entrance light when entering
+  trigger:
+    - platform: event
+      event_type: zwave_js_notification
+      event_data:
+        device_id: "e8eb5d524639cae23921eacd145bde9f"
+        event_label: "Keypad unlock operation"
+  condition:
+    or:
+      - condition: sun
+        after: sunset
+        after_offset: "-01:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "01:00:00"
+  action:
+    - service: script.auto_switch_on
+      data:
+        duration_seconds: 300
+        auto_entity: switch.entrance_light
+
+- alias: Update christmas lights
+  trigger:
+    - platform: state
+      entity_id: person.cath
+      from: "home"
+    - platform: state
+      entity_id: person.cath
+      to: "home"
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+  action:
+    - service: >
+        {% if is_state('person.cath', 'home') and
+           is_state('alarm_control_panel.home_alarm', 'disarmed') %}
+          light.turn_on
+        {% else %}
+          light.turn_off
+        {% endif %}
+      entity_id: light.twinkly_a80df9
+
+- alias: Turn on second floor hallway lights when motion is detected
+  id: Turn_on_second_floor_hallway_lights_when_motion_is_detected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.second_floor_motion
+      to: "on"
+  condition:
+    - and:
+        - condition: state
+          entity_id: switch.baby_monitor
+          state: "off"
+        - or:
+            - condition: state
+              entity_id: light.second_floor_hallway_light
+              state: "off"
+            - condition: state
+              entity_id: light.second_floor_hallway_light
+              attribute: brightness
+              state: 103
+  mode: restart
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.second_floor_hallway_light
+        brightness: 103
+    - wait_for_trigger:
+        - platform: state
+          entity_id: light.second_floor_hallway_light
+      timeout:
+        minutes: 2
+    - condition: template
+      value_template: "{{ wait.trigger is none }}"
+    - service: light.turn_off
+      entity_id: light.second_floor_hallway_light
+
+- alias: Turn on fred bathroom lights when motion is detected
+  id: Turn_on_fred_bathroom_lights_when_motion_is_detected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.second_floor_motion
+      to: "on"
+  condition:
+    - and:
+        - condition: time
+          after: "19:00:00"
+          before: "07:00:00"
+        - or:
+            - condition: state
+              entity_id: light.frederique_bathroom
+              state: "off"
+            - condition: state
+              entity_id: light.frederique_bathroom
+              attribute: brightness
+              state: 103
+  mode: restart
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.frederique_bathroom
+        brightness: 103
+    - wait_for_trigger:
+        - platform: state
+          entity_id: light.frederique_bathroom
+      timeout:
+        minutes: 10
+    - condition: template
+      value_template: "{{ wait.trigger is none }}"
+    - service: light.turn_off
+      entity_id: light.frederique_bathroom

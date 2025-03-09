@@ -1,0 +1,399 @@
+---
+# ------------------------------
+# zwave_js_value_notification
+# trigger.event.data.property_key_name 001 (up) 002 (down)
+# trigger.event.data.value KeyHeldDown KeyPressed KeyPressed2x KeyPressed3x
+# trigger.event.data.device_id
+# Entity_id: device_id
+# light.master_bathroom_ceiling: 687e9fab2b3ccfa16ac3a198bafcacfe
+# light.master_bathroom_mirror: 30baf8ef23184ea404f526731fedeee5
+# light.frederique_bedroom: b12002d63d77d5494057952f1917006a
+# light.ground_floor_hallway: baff7d7087c930454730b4be59a3ceb7
+# light.kitchen: c67fd05c899d2f3d80ac784e7b648614
+# light.living_room: c8ca1d8d1050852ccc60689a6cc90f7d
+# light.upper_stairs: a65e672f9a9e0ff64184a210fd25eea4
+# switch.entryway: a65e672f9a9e0ff64184a210fd25eea4
+# switch.front_yard: 8377c854a76dfb8ea465f9bfcf085490
+# switch.master_bathroom_fan: 36989a6f46ef190b09beec8db9f81168
+# light.frederique_bathroom: 15b0ac46cbfa569a366379db4d521b98
+# ------------------------------
+- alias: Frederique main light brightness
+  trigger:
+    - platform: state
+      entity_id: light.frederique_bedroom
+      attribute: brightness
+  mode: restart
+  action:
+    repeat:
+      sequence:
+        - service: light.turn_on
+          data:
+            entity_id: light.frederique_night_light
+            brightness: >-
+              {{ state_attr('light.frederique_bedroom', 'brightness')
+                 |int(0) }}
+        - delay:
+            milliseconds: 500
+      until: >-
+        {{ (state_attr('light.frederique_night_light', 'brightness')|int(0))
+           ==
+           (state_attr('light.frederique_bedroom', 'brightness')|int(0)) }}
+
+- alias: Frederique main light triple up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "b12002d63d77d5494057952f1917006a"
+        property_key_name: "001"
+        value: "KeyPressed3x"
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.frederique_night_light
+        brightness: 255
+
+- alias: Frederique main light triple down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "b12002d63d77d5494057952f1917006a"
+        property_key_name: "002"
+        value: "KeyPressed3x"
+  action:
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.frederique_night_light
+          - light.frederique_bedroom
+
+- alias: Stairs double down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "a65e672f9a9e0ff64184a210fd25eea4"
+        property_key_name: "002"
+        value: "KeyPressed2x"
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "baff7d7087c930454730b4be59a3ceb7"
+        property_key_name: "002"
+        value: "KeyPressed2x"
+  action:
+    - service: light.turn_on
+      data:
+        entity_id:
+          - light.table_de_chevet_de_cath
+          - light.table_de_chevet_de_yan
+        brightness: 150
+
+- alias: Kitchen double up/down
+  id: kitchen_double_up_down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "6b1eccc8c4bbb9613bae53ed04d11e0d"
+        value: "KeyPressed2x"
+  action:
+    - service: >
+        light.turn_{{ "on" if trigger.event.data.property_key_name == "001"
+                      else "off"}}
+      entity_id:
+        - light.kitchen_main_light
+        - light.living_room_main_light
+        - light.ground_floor_hallway_light
+        - light.salle_de_lecture
+
+- alias: Frederique main light double down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "b12002d63d77d5494057952f1917006a"
+        property_key_name: "002"
+        value: "KeyPressed2x"
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.frederique_bedroom
+    - service: switch.turn_on
+      data:
+        entity_id: switch.baby_monitor
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_stop
+        variables:
+          media_player_id: media_player.bureau
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_start
+        variables:
+          media_player_id: media_player.bureau
+
+- alias: Frederique main light single up or release from hold up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "b12002d63d77d5494057952f1917006a"
+        property_key_name: "001"
+        value: "KeyPressed"
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "b12002d63d77d5494057952f1917006a"
+        property_key_name: "001"
+        value: "KeyHeldDown"
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.baby_monitor
+    - service: script.turn_on
+      data:
+        entity_id: script.white_noise_stop
+        variables:
+          media_player_id: media_player.bureau
+
+- alias: Set zwave light to default when single click up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        value: "KeyPressed"
+        property_key_name: "001"
+  variables:
+    light_entity_id: >-
+      {{ device_entities(trigger.event.data.device_id) | first }}
+  condition: >-
+    {{ states(light_entity_id) != "unknown" and
+       light_entity_id not in states.group.zwave_dimmers_default_exclude.attributes.entity_id }}
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: "{{ light_entity_id }}"
+        brightness: >-
+          {% if light_entity_id in
+                states.group.zwave_dimmers_default_low.attributes.entity_id %}
+            1
+          {% else %}
+            255
+          {% endif %}
+    - service: zwave_js.refresh_value
+      data:
+        entity_id: "{{ light_entity_id }}"
+
+- alias: Bathroom ceiling light single click up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
+        property_key_name: "001"
+        value: "KeyPressed"
+  action:
+    - service: light.turn_on
+      data:
+        entity_id:
+          - light.bathroom_ceiling_light
+          - light.bathroom_mirror_light
+        brightness: 255
+    - service: switch.turn_on
+      data:
+        entity_id: switch.master_bathroom_fan
+
+- alias: bathroom any light single click down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
+        property_key_name: "002"
+        value: "KeyPressed"
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "30baf8ef23184ea404f526731fedeee5"
+        property_key_name: "002"
+        value: "KeyPressed"
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.bathroom_ceiling_light
+        - light.bathroom_mirror_light
+    - service: script.auto_off
+      data:
+        auto_entity: switch.master_bathroom_fan
+        duration_seconds: 1800
+
+- alias: bathroom fan double click up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "36989a6f46ef190b09beec8db9f81168"
+        property_key_name: "001"
+        value: "KeyPressed2x"
+  action:
+    - service: script.auto_switch_on
+      data:
+        auto_entity: switch.master_bathroom_fan
+        duration_seconds: 1800
+
+- alias: bathroom fan triple click up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "36989a6f46ef190b09beec8db9f81168"
+        property_key_name: "001"
+        value: "KeyPressed3x"
+  action:
+    - service: script.auto_switch_on
+      data:
+        auto_entity: switch.master_bathroom_fan
+        duration_seconds: 3600
+
+- alias: bathroom any light double click up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
+        property_key_name: "001"
+        value: "KeyPressed2x"
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "30baf8ef23184ea404f526731fedeee5"
+        property_key_name: "001"
+        value: "KeyPressed2x"
+  variables:
+    light_entity_id: >-
+      {{ device_entities(trigger.event.data.device_id) | first }}
+  condition: '{{ states(light_entity_id) != "unknown" }}'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: "{{ light_entity_id }}"
+        brightness: 255
+
+- alias: bathroom ceiling triple click up
+  id: bathroom_ceiling_triple_click_up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
+        property_key_name: "001"
+        value: "KeyPressed3x"
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom_ceiling_light
+        brightness: 255
+    - service: switch.turn_on
+      entity_id: switch.heated_bed
+
+- alias: Heated bed turn off after 20 minutes
+  id: Heated_bed_turn_off_after_20_minutes
+  trigger:
+    - platform: state
+      entity_id: switch.heated_bed
+      to: "on"
+      for:
+        minutes: 20
+  action:
+    - service: switch.turn_off
+      entity_id: switch.heated_bed
+
+- alias: bathroom ceiling tripple click down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
+        property_key_name: "002"
+        value: "KeyPressed3x"
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.bathroom_ceiling_light
+        - light.bathroom_mirror_light
+    - service: switch.turn_off
+      entity_id: switch.master_bathroom_fan
+    - service: light.turn_on
+      data:
+        entity_id:
+          - light.kitchen_main_light
+          - light.upper_stairs_light
+        brightness: 40
+
+- alias: bathroom any light double click down
+  id: bathroom_any_light_double_click_down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
+        property_key_name: "002"
+        value: "KeyPressed2x"
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "30baf8ef23184ea404f526731fedeee5"
+        property_key_name: "002"
+        value: "KeyPressed2x"
+  variables:
+    light_entity_id: >-
+      {{ device_entities(trigger.event.data.device_id) | first }}
+  condition: '{{ states(light_entity_id) != "unknown" }}'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: "{{ light_entity_id }}"
+
+- alias: front light double click down
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "8377c854a76dfb8ea465f9bfcf085490"
+        property_key_name: "002"
+        value: "KeyPressed2x"
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.kitchen_main_light
+        - light.upper_stairs_light
+
+- alias: Fred bathroom main light single click up
+  id: fred_bathroom_main_light_single_click_up
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        device_id: "15b0ac46cbfa569a366379db4d521b98"
+        property_key_name: "001"
+        value: "KeyPressed"
+  mode: single
+  max_exceeded: silent
+  variables:
+    brightness: >
+      {{ 103 if (19 <= now().hour or now().hour < 7) and
+         is_state('switch.baby_monitor', 'on') else 255 }}
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.frederique_bedroom
+        brightness: "{{ brightness }}"
+    - condition: "{{ brightness == 103 }}"
+    - delay: "00:10:00"
+    - service: light.turn_off
+      data:
+        entity_id: light.frederique_bedroom

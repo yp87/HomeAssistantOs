@@ -1,0 +1,43 @@
+---
+- alias: Cath leaving home
+  trigger:
+    - platform: zone
+      entity_id: person.cath
+      zone: zone.home
+      event: leave
+  condition:
+    - condition: time
+      before: '10:00:00'
+  action:
+    service: light.turn_off
+    entity_id: all
+
+- alias: Yan leaving work
+  trigger:
+    platform: zone
+    entity_id: person.yan
+    zone: zone.Work_yan
+    event: leave
+  condition:
+    - condition: time
+      after: !secret yan_leave_work_time
+      before: '23:00:00'
+  action:
+    service: notify.cath
+    data:
+      message: >
+        Yan est parti du travail. Il faut
+        {{ states('sensor.yantohome') }} minutes pour rentrer à la maison.
+
+- alias: Cath leaving work
+  trigger:
+    - platform: zone
+      entity_id: person.cath
+      zone: zone.work_cath
+      event: leave
+  action:
+    service: notify.yan
+    data:
+      message: >
+        Cath est parti du travail. Il faut
+        {{ states('sensor.cathtohome') }} minutes pour rentrer à la maison.

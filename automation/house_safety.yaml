@@ -1,0 +1,243 @@
+---
+- alias: everyone has left
+  trigger:
+  - platform: state
+    entity_id: group.all_people
+    from: 'home'
+    to: 'not_home'
+  condition:
+    or:
+      - condition: state
+        entity_id: binary_sensor.garage_door
+        state: 'on'
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: 'disarmed'
+  action:
+    - service: notify.all_people
+      data:
+        # The garage message will be handled in
+        # "close garage door if no one is home"
+        message: >
+          On dirait que quelque chose cloche..
+          {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
+          Il n'y a personne à la maison et le système d'alarme est désarmé.
+          {% endif %}
+    - repeat:
+        sequence:
+          - delay:
+              seconds: 20
+          - service: notify.all_people
+            data:
+              message: >
+                {% if is_state('binary_sensor.garage_door', 'on') %}
+                la porte de garage est toujours ouverte.
+                {% endif %}
+                {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
+                le système d'alarme est toujours désarmé.
+                {% endif %}
+        until:
+          - or:
+              - condition: state
+                entity_id: group.all_people
+                state: 'home'
+              - and:
+                  - condition: state
+                    entity_id: binary_sensor.garage_door
+                    state: 'off'
+                  - condition: state
+                    entity_id: alarm_control_panel.home_alarm
+                    state: 'armed_away'
+    - service: notify.all_people
+      data:
+        message: Le problème est maintenant réglé.
+
+- alias: intrusion when no one is home
+  id: intrusion_when_no_one_is_home
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garage_door
+      to: 'on'
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: 'armed_away'
+  mode: single
+  max_exceeded: silent
+  action:
+    - delay:
+        seconds: 60
+    - condition: state
+      entity_id: group.all_people
+      state: 'not_home'
+    - service: notify.all_people
+      data:
+        # The garage message will be handled in
+        # "close garage door if no one is home"
+        message: >
+          Une intrusion a été détectée.
+          {% if trigger.entity_id == 'alarm_control_panel.home_alarm' %}
+            Il n'y a personne à la maison et
+            le système d'alarme n'est plus armé.
+          {% endif %}
+    - delay:
+        seconds: 60
+    - condition: state
+      entity_id: group.all_people
+      state: 'not_home'
+    - service: media_player.volume_set
+      entity_id: media_player.maison
+      data:
+        volume_level: 1
+    - repeat:
+        count: 20
+        sequence:
+          - service: tts.google_translate_say
+            entity_id: media_player.maison
+            data:
+              message: >-
+                Une intrusion a été détectée.
+                Les vidéos de votre arrivé et l'information
+                de votre téléphone mobile ont été enregistrés.
+                La police a été informée. Quittez immédiatement les lieux.
+              language: 'fr'
+          - delay:
+              seconds: 30
+    - service: media_player.volume_set
+      entity_id: media_player.maison
+      data:
+        volume_level: 0.3
+
+- alias: close garage door if no one is home
+  id: close_garage_door_if_no_one_is_home
+  trigger:
+    - platform: state
+      entity_id: group.all_people
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: binary_sensor.garage_door
+      to: 'on'
+  condition:
+    and:
+      - condition: state
+        entity_id: binary_sensor.garage_door
+        state: 'on'
+      - condition: state
+        entity_id: group.all_people
+        state: 'not_home'
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: notify.all_people
+      data:
+        message: >-
+          Il n'y a personne à la maison et la porte de garage est ouverte.
+    - repeat:
+        sequence:
+          - service: notify.all_people
+            data:
+              message: Fermeture de la porte de garage en cours...
+          - service: input_button.press
+            entity_id: input_button.garage_door
+          - delay:
+              milliseconds: 15000
+        until:
+          - or:
+              - condition: state
+                entity_id: binary_sensor.garage_door
+                state: 'off'
+              - condition: state
+                entity_id: group.all_people
+                state: 'home'
+    - service: notify.all_people
+      data:
+        message: >
+          {% if is_state('binary_sensor.garage_door', 'off') %}
+            La porte de garage est maintenant fermée.
+          {% else %}
+            La porte de garage n'est pas encore fermée,
+            mais il y a maintenant quelqu'un à la maison.
+          {% endif %}
+
+
+- alias: Alert when front door stays open
+  id: Alert_when_front_door_stays_open
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door
+      to: 'on'
+      for:
+        minutes: 2
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: notify.all_people
+      data:
+        message: La porte d'entrée est ouverte depuis plus de deux minutes.
+    - service: media_player.volume_set
+      entity_id: media_player.kitchen
+      data:
+        volume_level: 0.5
+    - repeat:
+        sequence:
+          - wait_template: "{{ is_state('binary_sensor.front_door', 'off') }}"
+            timeout: "00:00:20"
+          - if:
+              - "{{ not wait.completed }}"
+            then:
+              - service: notify.all_people
+                data:
+                  message: La porte d'entrée est toujours ouverte.
+              - service: tts.google_translate_say
+                entity_id: media_player.kitchen
+                data:
+                  message: La porte d'entrée est ouverte.
+                  language: 'fr'
+        until:
+          - condition: state
+            entity_id: binary_sensor.front_door
+            state: 'off'
+    - service: notify.all_people
+      data:
+        message: La porte est maintenant fermée.
+    - service: tts.google_translate_say
+      entity_id: media_player.kitchen
+      data:
+        message: La porte d'entrée est maintenant fermée.
+        language: 'fr'
+    - service: media_player.volume_set
+      entity_id: media_player.kitchen
+      data:
+        volume_level: 0.2
+
+- alias: Alert when garage door stays open
+  id: Alert_when_garage_door_stays_open
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garage_door
+      to: 'on'
+      for:
+        minutes: 10
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: notify.yan
+      data:
+        message: La porte de garage est ouverte depuis plus de dix minutes.
+    - repeat:
+        sequence:
+          - wait_template: "{{ is_state('binary_sensor.garage_door', 'off') }}"
+            timeout: "00:10:00"
+          - if:
+              - "{{ not wait.completed }}"
+            then:
+              - service: notify.yan
+                data:
+                  message: La porte de garage est toujours ouverte.
+        until:
+          - condition: state
+            entity_id: binary_sensor.garage_door
+            state: 'off'
+    - service: notify.yan
+      data:
+        message: La porte de garage est maintenant fermée.

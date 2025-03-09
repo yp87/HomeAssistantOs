@@ -1,0 +1,19 @@
+---
+halloween:
+  initial: false
+
+yan_had_pills:
+
+yan_phone_rings:
+  initial: false
+
+cath_phone_rings:
+  initial: false
+
+yan_phone_notification:
+  initial: false
+
+cath_phone_notification:
+  initial: false
+
+yan_phone_plugged:

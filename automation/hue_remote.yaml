@@ -1,0 +1,80 @@
+---
+- alias: Hue restart integration event workaround
+  id: Hue_restart_integration_event_workaround
+  trigger:
+    platform: time
+    at: "19:00:00"
+  action:
+    service: homeassistant.reload_config_entry
+    data:
+      entry_id: 1742bde87dfd47a5a80d11af5a0bcd86
+
+- alias: Hue remote automation - Long Press Off
+  id: Hue_remote_automation_Long_Press_Off
+  trigger:
+    - platform: event
+      event_type: hue_event
+      event_data:
+        id: "hue_dimmer_switch_1_button"
+        type: "repeat"
+        subtype: 4
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.lock_door
+        variables:
+          lock_id: lock.garage_door_lock
+    - service: alarm_control_panel.alarm_arm_home
+      entity_id: all
+    - service: script.turn_on
+      data:
+        entity_id: script.lights_off_except
+        variables:
+          exclude_lights:
+            - switch.light_front
+            - switch.heated_bed
+            - light.frederique_bedroom
+            - light.frederique_night_light
+    - service: remote.turn_off
+      entity_id: remote.yharmony
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: sleep
+    - service: script.turn_off
+      entity_id: script.increase_basement_heating
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.chauffage_sous_sol_thermostat
+        temperature: 19
+
+    - service: media_player.volume_set
+      entity_id: media_player.bedroom
+      data:
+        volume_level: 0.05
+    - service: tts.google_translate_say
+      entity_id: media_player.bedroom
+      data:
+        message: >-
+          N'oubliez pas vos pilules et la nourriture sur le comptoir.
+          Bonne nuit!
+        language: "fr"
+    - delay:
+        seconds: 10
+
+- alias: Hue remote automation - Long Press ON
+  trigger:
+    - platform: event
+      event_type: hue_event
+      event_data:
+        id: "hue_dimmer_switch_1_button"
+        type: "repeat"
+        subtype: 1
+  mode: single
+  max_exceeded: silent
+  action:
+    - service: script.morning
+    - delay:
+        seconds: 10
