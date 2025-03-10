@@ -2,9 +2,9 @@
 - alias: Sync parking camera time
   id: sync_parking_camera_time
   triggers:
-    - platform: time
+    - trigger: time
       at: "00:00:00"
-    - platform: homeassistant
+    - trigger: homeassistant
       event: start
   condition:
     condition: state

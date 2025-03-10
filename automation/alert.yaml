@@ -82,7 +82,7 @@
 
 - alias: Alert midnight resets
   triggers:
-    - platform: time
+    - trigger: time
       at: "00:00:00"
   actions:
     - action: input_boolean.turn_off
@@ -91,9 +91,9 @@
 - alias: yan pills notify
   id: yan_pills_notify
   triggers:
-    - platform: time
+    - trigger: time
       at: "21:00:00"
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.yan_phone_plugged
       to: "on"
   condition:

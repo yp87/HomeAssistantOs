@@ -1,7 +1,7 @@
 ---
 - alias: everyone has left
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: group.all_people
       from: "home"
       to: "not_home"
@@ -55,10 +55,10 @@
 - alias: intrusion when no one is home
   id: intrusion_when_no_one_is_home
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.garage_door
       to: "on"
-    - platform: state
+    - trigger: state
       entity_id: alarm_control_panel.home_alarm
       from: "armed_away"
   mode: single
@@ -110,11 +110,11 @@
 - alias: close garage door if no one is home
   id: close_garage_door_if_no_one_is_home
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: group.all_people
       from: "home"
       to: "not_home"
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.garage_door
       to: "on"
   condition:
@@ -162,7 +162,7 @@
 - alias: Alert when front door stays open
   id: Alert_when_front_door_stays_open
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.front_door
       to: "on"
       for:
@@ -212,7 +212,7 @@
 - alias: Alert when garage door stays open
   id: Alert_when_garage_door_stays_open
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.garage_door
       to: "on"
       for:

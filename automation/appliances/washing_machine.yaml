@@ -2,7 +2,7 @@
 - alias: Washer leak detected
   id: Washer_leak_detected
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.washer_leak_sensor
       to: "on"
   actions:

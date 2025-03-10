@@ -2,9 +2,9 @@
 - alias: Sync garage camera time
   id: sync_garage_camera_time
   triggers:
-    - platform: time
+    - trigger: time
       at: "00:00:00"
-    - platform: homeassistant
+    - trigger: homeassistant
       event: start
   condition:
     condition: state
@@ -18,7 +18,7 @@
   mode: single
   max_exceeded: silent
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.garage_motion_detection
       to: "on"
   condition:
@@ -46,7 +46,7 @@
   mode: single
   max_exceeded: silent
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: input_button.garage_door
   actions:
     - action: rest_command.garage_camera_output

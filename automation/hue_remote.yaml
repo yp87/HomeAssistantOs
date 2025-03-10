@@ -12,7 +12,7 @@
 - alias: Hue remote automation - Long Press Off
   id: Hue_remote_automation_Long_Press_Off
   triggers:
-    - platform: event
+    - trigger: event
       event_type: hue_event
       event_data:
         id: "hue_dimmer_switch_1_button"
@@ -66,7 +66,7 @@
 
 - alias: Hue remote automation - Long Press ON
   triggers:
-    - platform: event
+    - trigger: event
       event_type: hue_event
       event_data:
         id: "hue_dimmer_switch_1_button"

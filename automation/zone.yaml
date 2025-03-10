@@ -1,7 +1,7 @@
 ---
 - alias: Cath leaving home
   triggers:
-    - platform: zone
+    - trigger: zone
       entity_id: person.cath
       zone: zone.home
       event: leave
@@ -31,7 +31,7 @@
 
 - alias: Cath leaving work
   triggers:
-    - platform: zone
+    - trigger: zone
       entity_id: person.cath
       zone: zone.work_cath
       event: leave

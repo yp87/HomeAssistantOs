@@ -1,7 +1,7 @@
 ---
 - alias: Turn on front light at sunset
   triggers:
-    - platform: sun
+    - trigger: sun
       event: sunset
   actions:
     action: switch.turn_on
@@ -9,7 +9,7 @@
 
 - alias: Turn on front light in the morning
   triggers:
-    - platform: time
+    - trigger: time
       at: "05:30:00"
   condition:
     condition: sun
@@ -20,9 +20,9 @@
 
 - alias: Turn off front light at 10pm or sunrise
   triggers:
-    - platform: time
+    - trigger: time
       at: "22:00:00"
-    - platform: sun
+    - trigger: sun
       event: sunrise
   actions:
     action: switch.turn_off
@@ -31,7 +31,7 @@
 - alias: turn off entrance light when exiting
   id: turn_off_entrance_light_when_exiting
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_notification
       event_data:
         device_id: "e8eb5d524639cae23921eacd145bde9f"
@@ -42,7 +42,7 @@
 
 - alias: turn on entrance light when entering
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_notification
       event_data:
         device_id: "e8eb5d524639cae23921eacd145bde9f"
@@ -63,13 +63,13 @@
 
 - alias: Update christmas lights
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: person.cath
       from: "home"
-    - platform: state
+    - trigger: state
       entity_id: person.cath
       to: "home"
-    - platform: state
+    - trigger: state
       entity_id: alarm_control_panel.home_alarm
   actions:
     - action: >
@@ -84,7 +84,7 @@
 - alias: Turn on second floor hallway lights when motion is detected
   id: Turn_on_second_floor_hallway_lights_when_motion_is_detected
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.second_floor_motion
       to: "on"
   condition:
@@ -107,7 +107,7 @@
         entity_id: light.second_floor_hallway_light
         brightness: 103
     - wait_for_trigger:
-        - platform: state
+        - trigger: state
           entity_id: light.second_floor_hallway_light
       timeout:
         minutes: 2
@@ -119,7 +119,7 @@
 - alias: Turn on fred bathroom lights when motion is detected
   id: Turn_on_fred_bathroom_lights_when_motion_is_detected
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.second_floor_motion
       to: "on"
   condition:
@@ -142,7 +142,7 @@
         entity_id: light.frederique_bathroom
         brightness: 103
     - wait_for_trigger:
-        - platform: state
+        - trigger: state
           entity_id: light.frederique_bathroom
       timeout:
         minutes: 10

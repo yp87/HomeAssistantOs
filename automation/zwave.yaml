@@ -19,7 +19,7 @@
 # ------------------------------
 - alias: Frederique main light brightness
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: light.frederique_bedroom
       attribute: brightness
   mode: restart
@@ -41,7 +41,7 @@
 
 - alias: Frederique main light triple up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "b12002d63d77d5494057952f1917006a"
@@ -55,7 +55,7 @@
 
 - alias: Frederique main light triple down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "b12002d63d77d5494057952f1917006a"
@@ -70,13 +70,13 @@
 
 - alias: Stairs double down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "a65e672f9a9e0ff64184a210fd25eea4"
         property_key_name: "002"
         value: "KeyPressed2x"
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "baff7d7087c930454730b4be59a3ceb7"
@@ -93,7 +93,7 @@
 - alias: Kitchen double up/down
   id: kitchen_double_up_down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "c67fd05c899d2f3d80ac784e7b648614"
@@ -110,7 +110,7 @@
 
 - alias: Frederique main light double down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "b12002d63d77d5494057952f1917006a"
@@ -136,13 +136,13 @@
 
 - alias: Frederique main light single up or release from hold up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "b12002d63d77d5494057952f1917006a"
         property_key_name: "001"
         value: "KeyPressed"
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "b12002d63d77d5494057952f1917006a"
@@ -162,7 +162,7 @@
 
 - alias: Set zwave light to default when single click up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         value: "KeyPressed"
@@ -190,7 +190,7 @@
 
 - alias: Bathroom ceiling light single click up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
@@ -209,13 +209,13 @@
 
 - alias: bathroom any light single click down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
         property_key_name: "002"
         value: "KeyPressed"
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "30baf8ef23184ea404f526731fedeee5"
@@ -233,7 +233,7 @@
 
 - alias: bathroom fan double click up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "36989a6f46ef190b09beec8db9f81168"
@@ -247,7 +247,7 @@
 
 - alias: bathroom fan triple click up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "36989a6f46ef190b09beec8db9f81168"
@@ -261,13 +261,13 @@
 
 - alias: bathroom any light double click up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
         property_key_name: "001"
         value: "KeyPressed2x"
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "30baf8ef23184ea404f526731fedeee5"
@@ -286,7 +286,7 @@
 - alias: bathroom ceiling triple click up
   id: bathroom_ceiling_triple_click_up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
@@ -303,7 +303,7 @@
 - alias: Heated bed turn off after 20 minutes
   id: Heated_bed_turn_off_after_20_minutes
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: switch.heated_bed
       to: "on"
       for:
@@ -314,7 +314,7 @@
 
 - alias: bathroom ceiling tripple click down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
@@ -337,13 +337,13 @@
 - alias: bathroom any light double click down
   id: bathroom_any_light_double_click_down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
         property_key_name: "002"
         value: "KeyPressed2x"
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "30baf8ef23184ea404f526731fedeee5"
@@ -360,7 +360,7 @@
 
 - alias: front light double click down
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "8377c854a76dfb8ea465f9bfcf085490"
@@ -375,7 +375,7 @@
 - alias: Fred bathroom main light single click up
   id: fred_bathroom_main_light_single_click_up
   triggers:
-    - platform: event
+    - trigger: event
       event_type: zwave_js_value_notification
       event_data:
         device_id: "15b0ac46cbfa569a366379db4d521b98"

@@ -1,10 +1,10 @@
 ---
 - alias: tv notif phone ringing
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.yan_phone_rings
       to: "on"
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.cath_phone_rings
       to: "on"
   variables:
@@ -21,9 +21,9 @@
 
 - alias: tv notif phone notification
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.yan_phone_notification
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.cath_phone_notification
   variables:
     name: >-
@@ -41,7 +41,7 @@
 - alias: chromecast turns on
   id: chromecast_turns_on
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: remote.salon_tv
       to: "on"
   condition:
@@ -57,7 +57,7 @@
 - alias: chromecast turns off
   id: chromecast_turns_off
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: remote.salon_tv
       to: "off"
   condition:
@@ -73,7 +73,7 @@
 - alias: xbox turns on
   id: xbox_turns_on
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.xbox
       to: "on"
   condition:
@@ -89,7 +89,7 @@
 - alias: xbox turns off
   id: xbox_turns_off
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.xbox
       to: "off"
   condition:
@@ -104,9 +104,9 @@
 
 - alias: Hyperion phone ringing
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.yan_phone_rings
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.cath_phone_rings
   variables:
     effect_priority: >-
@@ -135,9 +135,9 @@
 
 - alias: Hyperion phone notification
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.yan_phone_notification
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.cath_phone_notification
   variables:
     effect: >-
@@ -166,7 +166,7 @@
 - alias: tv turns on
   id: tv_turns_on
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: media_player.tv
       to: "on"
   actions:
@@ -177,7 +177,7 @@
 - alias: tv turns off
   id: tv_turns_off
   triggers:
-    - platform: state
+    - trigger: state
       entity_id: media_player.tv
       to: "off"
   actions:
@@ -188,7 +188,7 @@
 - alias: set hyperhd hdr mode
   id: set_hyperhd_hdr_mode
   triggers:
-    - platform: event
+    - trigger: event
       event_type: denon_hdr
   actions:
     - action: hyperion_priority.set_hdr_mode
@@ -198,7 +198,7 @@
 - alias: Query denon hdr mode
   id: query_denon_hdr_mode
   triggers:
-    - platform: time_pattern
+    - trigger: time_pattern
       seconds: "/30"
   condition:
     - condition: state
