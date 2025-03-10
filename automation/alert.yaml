@@ -2,7 +2,7 @@
 - alias: Alert when house heating is out of normal parameters
   id: Alert_when_house_heating_is_out_of_normal_parameters
   triggers:
-    platform: state
+    trigger: state
     entity_id: climate.main_floor
   variables:
     climate_mode: "{{ states('climate.main_floor') }}"
@@ -49,7 +49,7 @@
 - alias: Alert for food
   id: alert_for_food
   triggers:
-    platform: time
+    trigger: time
     at: "12:45:00"
   actions:
     - action: media_player.volume_set
@@ -64,7 +64,7 @@
 
 - alias: Home assistant started notification
   triggers:
-    platform: homeassistant
+    trigger: homeassistant
     event: start
   actions:
     - action: media_player.volume_set
@@ -143,7 +143,7 @@
 
 - alias: Notify when device has low battery
   triggers:
-    platform: numeric_state
+    trigger: numeric_state
     entity_id:
       - sensor.fridge_door_battery_level
       - sensor.front_door_lock_battery

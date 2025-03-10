@@ -14,7 +14,7 @@
 
 - alias: Yan leaving work
   triggers:
-    platform: zone
+    trigger: zone
     entity_id: person.yan
     zone: zone.Work_yan
     event: leave

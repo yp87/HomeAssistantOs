@@ -2,7 +2,7 @@
 - alias: Notify when ender3 print is done
   id: Notify_when_ender3_print_is_done
   triggers:
-    platform: state
+    trigger: state
     entity_id: binary_sensor.octoprint_printing
     from: "on"
     to: "off"
