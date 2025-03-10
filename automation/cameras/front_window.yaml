@@ -11,4 +11,4 @@
     entity_id: camera.front_window
     state: idle
   actions:
-    - service: shell_command.set_front_window_camera_time
+    - action: shell_command.set_front_window_camera_time

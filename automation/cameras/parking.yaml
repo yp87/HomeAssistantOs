@@ -11,7 +11,7 @@
     entity_id: camera.parking
     state: idle
   actions:
-    - service: shell_command.set_parking_camera_time
+    - action: shell_command.set_parking_camera_time
 
 - alias: Notify when motion in parking
   id: Notify_when_motion_in_parking
@@ -22,7 +22,7 @@
       topic: "camera/parking/motion"
   actions:
     - delay: "00:00:01"
-    - service: gemini_api.generate_text
+    - action: gemini_api.generate_text
       continue_on_error: true
       data:
         prompt: >-
@@ -38,7 +38,7 @@
           - /config/www/pictures/parking00001.jpg
           - /config/www/pictures/parking00007.jpg
       response_variable: image_description
-    - service: notify.yan
+    - action: notify.yan
       data:
         message: "{{ image_description.text if image_description else 'Parking Motion detected' }}"
         data:

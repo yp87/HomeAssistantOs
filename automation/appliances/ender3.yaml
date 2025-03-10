@@ -7,6 +7,6 @@
     from: "on"
     to: "off"
   actions:
-    - service: script.notify_and_speak
+    - action: script.notify_and_speak
       data:
         message: L'impression 3D est terminée.

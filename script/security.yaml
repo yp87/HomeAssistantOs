@@ -2,30 +2,30 @@
 lock_door:
   fields:
     lock_id:
-      description: 'The entity to lock'
-      example: 'lock.front_door_lock'
+      description: "The entity to lock"
+      example: "lock.front_door_lock"
   mode: parallel
   sequence:
-    - service: lock.lock
+    - action: lock.lock
       data:
-        entity_id: '{{ lock_id }}'
+        entity_id: "{{ lock_id }}"
     - delay: "00:00:05"
-    - service: lock.lock
+    - action: lock.lock
       data:
-        entity_id: '{{ lock_id }}'
+        entity_id: "{{ lock_id }}"
 
 arm_lock_home:
   sequence:
-    - service: alarm_control_panel.alarm_arm_away
+    - action: alarm_control_panel.alarm_arm_away
       entity_id: alarm_control_panel.home_alarm
-    - service: script.lock_door
+    - action: script.lock_door
       data:
         lock_id: lock.front_door_lock
 
 disarm_unlock_home:
   sequence:
-    - service: script.disarm_home
-    - service: lock.unlock
+    - action: script.disarm_home
+    - action: lock.unlock
       data:
         entity_id: lock.front_door_lock
         code: !secret front_door_pin
@@ -34,7 +34,7 @@ disarm_unlock_home:
       before_offset: "01:00:00"
       after: sunset
       after_offset: "-01:00:00"
-    - service: script.auto_switch_on
+    - action: script.auto_switch_on
       data:
         duration_seconds: 300
         auto_entity: switch.entrance_light
@@ -46,5 +46,5 @@ disarm_home:
         - condition: state
           entity_id: alarm_control_panel.home_alarm
           state: "disarmed"
-    - service: alarm_control_panel.alarm_disarm
+    - action: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.home_alarm

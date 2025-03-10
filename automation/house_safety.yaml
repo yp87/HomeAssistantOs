@@ -14,7 +14,7 @@
         entity_id: alarm_control_panel.home_alarm
         state: "disarmed"
   actions:
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         # The garage message will be handled in
         # "close garage door if no one is home"
@@ -27,7 +27,7 @@
         sequence:
           - delay:
               seconds: 20
-          - service: notify.all_people
+          - action: notify.all_people
             data:
               message: >
                 {% if is_state('binary_sensor.garage_door', 'on') %}
@@ -48,7 +48,7 @@
                   - condition: state
                     entity_id: alarm_control_panel.home_alarm
                     state: "armed_away"
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         message: Le problème est maintenant réglé.
 
@@ -69,7 +69,7 @@
     - condition: state
       entity_id: group.all_people
       state: "not_home"
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         # The garage message will be handled in
         # "close garage door if no one is home"
@@ -84,14 +84,14 @@
     - condition: state
       entity_id: group.all_people
       state: "not_home"
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       entity_id: media_player.maison
       data:
         volume_level: 1
     - repeat:
         count: 20
         sequence:
-          - service: tts.google_translate_say
+          - action: tts.google_translate_say
             entity_id: media_player.maison
             data:
               message: >-
@@ -102,7 +102,7 @@
               language: "fr"
           - delay:
               seconds: 30
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       entity_id: media_player.maison
       data:
         volume_level: 0.3
@@ -128,16 +128,16 @@
   mode: single
   max_exceeded: silent
   actions:
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         message: >-
           Il n'y a personne à la maison et la porte de garage est ouverte.
     - repeat:
         sequence:
-          - service: notify.all_people
+          - action: notify.all_people
             data:
               message: Fermeture de la porte de garage en cours...
-          - service: input_button.press
+          - action: input_button.press
             entity_id: input_button.garage_door
           - delay:
               milliseconds: 15000
@@ -149,7 +149,7 @@
               - condition: state
                 entity_id: group.all_people
                 state: "home"
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         message: >
           {% if is_state('binary_sensor.garage_door', 'off') %}
@@ -170,10 +170,10 @@
   mode: single
   max_exceeded: silent
   actions:
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         message: La porte d'entrée est ouverte depuis plus de deux minutes.
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       entity_id: media_player.kitchen
       data:
         volume_level: 0.5
@@ -184,10 +184,10 @@
           - if:
               - "{{ not wait.completed }}"
             then:
-              - service: notify.all_people
+              - action: notify.all_people
                 data:
                   message: La porte d'entrée est toujours ouverte.
-              - service: tts.google_translate_say
+              - action: tts.google_translate_say
                 entity_id: media_player.kitchen
                 data:
                   message: La porte d'entrée est ouverte.
@@ -196,15 +196,15 @@
           - condition: state
             entity_id: binary_sensor.front_door
             state: "off"
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         message: La porte est maintenant fermée.
-    - service: tts.google_translate_say
+    - action: tts.google_translate_say
       entity_id: media_player.kitchen
       data:
         message: La porte d'entrée est maintenant fermée.
         language: "fr"
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       entity_id: media_player.kitchen
       data:
         volume_level: 0.2
@@ -220,7 +220,7 @@
   mode: single
   max_exceeded: silent
   actions:
-    - service: notify.yan
+    - action: notify.yan
       data:
         message: La porte de garage est ouverte depuis plus de dix minutes.
     - repeat:
@@ -230,13 +230,13 @@
           - if:
               - "{{ not wait.completed }}"
             then:
-              - service: notify.yan
+              - action: notify.yan
                 data:
                   message: La porte de garage est toujours ouverte.
         until:
           - condition: state
             entity_id: binary_sensor.garage_door
             state: "off"
-    - service: notify.yan
+    - action: notify.yan
       data:
         message: La porte de garage est maintenant fermée.

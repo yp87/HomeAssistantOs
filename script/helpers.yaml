@@ -2,12 +2,12 @@
 auto_light_on:
   mode: parallel
   sequence:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id: "{{ auto_entity }}"
         brightness: "{{ brightness }}"
 
-    - service: script.turn_on
+    - action: script.turn_on
       data:
         entity_id: script.auto_off
         variables:
@@ -17,10 +17,10 @@ auto_light_on:
 auto_switch_on:
   mode: parallel
   sequence:
-    - service: switch.turn_on
+    - action: switch.turn_on
       data:
         entity_id: "{{ auto_entity }}"
-    - service: script.turn_on
+    - action: script.turn_on
       data:
         entity_id: script.auto_off
         variables:
@@ -39,16 +39,16 @@ auto_off:
            as_timestamp(states[auto_entity].last_changed)
            >=
            duration_seconds|int - 10 }}
-    - service: homeassistant.turn_off
+    - action: homeassistant.turn_off
       data:
         entity_id: "{{ auto_entity }}"
 
 lights_off_except:
   fields:
     exclude_lights:
-      description: 'Excluded lights as list'
+      description: "Excluded lights as list"
   sequence:
-    - service: homeassistant.turn_off
+    - action: homeassistant.turn_off
       data:
         entity_id: >-
           {{ (states.light|list + expand('group.all_light_switches')) |
@@ -59,49 +59,49 @@ lights_off_except:
 remote_action:
   fields:
     owner:
-      description: 'The sender of the action'
-      example: 'Cath'
+      description: "The sender of the action"
+      example: "Cath"
     service:
-      description: 'The service to call'
-      example: 'light.turn_on'
+      description: "The service to call"
+      example: "light.turn_on"
     entity_id:
-      description: 'The target of the action'
-      example: 'light.kitchen_main_light'
+      description: "The target of the action"
+      example: "light.kitchen_main_light"
     message:
-      description: 'The content of the notification'
-      example: 'turning on the kitchen light'
+      description: "The content of the notification"
+      example: "turning on the kitchen light"
   mode: parallel
   sequence:
-    - service: "{{ service }}"
+    - action: "{{ service }}"
       data:
         entity_id: "{{ entity_id }}"
     - if:
         - "{{ message != '' }}"
       then:
-        - service: notify.{{ owner }}
+        - action: notify.{{ owner }}
           data:
             message: "{{ message }}"
 
 notify_and_speak:
   fields:
     message:
-      description: 'The content of the text and voice notification'
-      example: 'Hello everyone!'
+      description: "The content of the text and voice notification"
+      example: "Hello everyone!"
   mode: queued
   sequence:
-    - service: notify.all_people
+    - action: notify.all_people
       data:
         message: "{{ message }}"
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       entity_id:
         - media_player.kitchen
         - media_player.bedroom
       data:
         volume_level: 0.2
-    - service: tts.google_translate_say
+    - action: tts.google_translate_say
       entity_id:
         - media_player.kitchen
         - media_player.bedroom
       data:
         message: "{{ message }}"
-        language: 'fr'
+        language: "fr"

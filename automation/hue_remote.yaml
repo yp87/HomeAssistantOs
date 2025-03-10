@@ -5,7 +5,7 @@
     platform: time
     at: "19:00:00"
   actions:
-    service: homeassistant.reload_config_entry
+    action: homeassistant.reload_config_entry
     data:
       entry_id: 1742bde87dfd47a5a80d11af5a0bcd86
 
@@ -21,14 +21,14 @@
   mode: single
   max_exceeded: silent
   actions:
-    - service: script.turn_on
+    - action: script.turn_on
       data:
         entity_id: script.lock_door
         variables:
           lock_id: lock.garage_door_lock
-    - service: alarm_control_panel.alarm_arm_home
+    - action: alarm_control_panel.alarm_arm_home
       entity_id: all
-    - service: script.turn_on
+    - action: script.turn_on
       data:
         entity_id: script.lights_off_except
         variables:
@@ -37,24 +37,24 @@
             - switch.heated_bed
             - light.frederique_bedroom
             - light.frederique_night_light
-    - service: remote.turn_off
+    - action: remote.turn_off
       entity_id: remote.yharmony
-    - service: climate.set_preset_mode
+    - action: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
         preset_mode: sleep
-    - service: script.turn_off
+    - action: script.turn_off
       entity_id: script.increase_basement_heating
-    - service: climate.set_temperature
+    - action: climate.set_temperature
       data:
         entity_id: climate.chauffage_sous_sol_thermostat
         temperature: 19
 
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       entity_id: media_player.bedroom
       data:
         volume_level: 0.05
-    - service: tts.google_translate_say
+    - action: tts.google_translate_say
       entity_id: media_player.bedroom
       data:
         message: >-
@@ -75,6 +75,6 @@
   mode: single
   max_exceeded: silent
   actions:
-    - service: script.morning
+    - action: script.morning
     - delay:
         seconds: 10

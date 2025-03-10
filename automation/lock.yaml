@@ -18,7 +18,7 @@
       for:
         minutes: 4
   actions:
-    - service: script.lock_door
+    - action: script.lock_door
       data:
         lock_id: lock.front_door_lock
 
@@ -32,7 +32,7 @@
       entity_id: binary_sensor.front_door
       state: "on"
   actions:
-    - service: lock.unlock
+    - action: lock.unlock
       data:
         entity_id: lock.front_door_lock
         code: !secret front_door_pin

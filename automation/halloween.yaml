@@ -8,11 +8,11 @@
   actions:
     - repeat:
         sequence:
-          - service: switch.turn_off
+          - action: switch.turn_off
             entity_id: switch.light_front
           - delay:
               milliseconds: "{{ ( range(100, 700) | random | int) }}"
-          - service: switch.turn_on
+          - action: switch.turn_on
             entity_id: switch.light_front
           - delay:
               milliseconds: "{{ ( range(2000, 4000) | random | int) }}"

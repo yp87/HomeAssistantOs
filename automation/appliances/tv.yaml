@@ -15,7 +15,7 @@
         Cath
       {% endif %}
   actions:
-    - service: notify.tv
+    - action: notify.tv
       data:
         message: "{{ name }}'s phone is ringing"
 
@@ -34,7 +34,7 @@
       {% endif %}
   mode: queued
   actions:
-    - service: notify.tv
+    - action: notify.tv
       data:
         message: "{{ name }} received a message"
 
@@ -49,7 +49,7 @@
     entity_id: select.yharmony_activities
     state: "power_off"
   actions:
-    - service: select.select_option
+    - action: select.select_option
       data:
         entity_id: select.yharmony_activities
         option: "Watch TV"
@@ -65,7 +65,7 @@
     entity_id: select.yharmony_activities
     state: "Watch TV"
   actions:
-    - service: select.select_option
+    - action: select.select_option
       data:
         entity_id: select.yharmony_activities
         option: "power_off"
@@ -81,7 +81,7 @@
     entity_id: select.yharmony_activities
     state: "power_off"
   actions:
-    - service: select.select_option
+    - action: select.select_option
       data:
         entity_id: select.yharmony_activities
         option: "XBOX"
@@ -97,7 +97,7 @@
     entity_id: select.yharmony_activities
     state: "XBOX"
   actions:
-    - service: select.select_option
+    - action: select.select_option
       data:
         entity_id: select.yharmony_activities
         option: "power_off"
@@ -119,7 +119,7 @@
     - if:
         - '{{ trigger.to_state.state == "on" }}'
       then:
-        - service: hyperion_priority.apply_effect
+        - action: hyperion_priority.apply_effect
           data:
             effect: >-
               {% if trigger.entity_id == "input_boolean.yan_phone_rings" %}
@@ -129,7 +129,7 @@
               {% endif %}
             priority: "{{ effect_priority }}"
       else:
-        - service: hyperion_priority.clear_priority
+        - action: hyperion_priority.clear_priority
           data:
             priority: "{{ effect_priority }}"
 
@@ -154,12 +154,12 @@
       {% endif %}
   mode: queued
   actions:
-    - service: hyperion_priority.apply_effect
+    - action: hyperion_priority.apply_effect
       data:
         effect: "{{ effect }}"
         priority: "{{ effect_priority }}"
     - delay: "00:00:04"
-    - service: hyperion_priority.clear_priority
+    - action: hyperion_priority.clear_priority
       data:
         priority: "{{ effect_priority }}"
 
@@ -170,7 +170,7 @@
       entity_id: media_player.tv
       to: "on"
   actions:
-    - service: hyperion_priority.set_usb_capture
+    - action: hyperion_priority.set_usb_capture
       data:
         usb_capture: true
 
@@ -181,7 +181,7 @@
       entity_id: media_player.tv
       to: "off"
   actions:
-    - service: hyperion_priority.set_usb_capture
+    - action: hyperion_priority.set_usb_capture
       data:
         usb_capture: false
 
@@ -191,7 +191,7 @@
     - platform: event
       event_type: denon_hdr
   actions:
-    - service: hyperion_priority.set_hdr_mode
+    - action: hyperion_priority.set_hdr_mode
       data:
         hdr_mode: "{{ trigger.event.data.value }}"
 
@@ -205,7 +205,7 @@
       entity_id: media_player.denon_avr_x3500h
       state: "on"
   actions:
-    - service: denonavr_hdr.get_command
+    - action: denonavr_hdr.get_command
       data:
         command: /goform/formiPhoneAppDirect.xml?SSINFSIGHDR ?
         entity_id: media_player.denon_avr_x3500h

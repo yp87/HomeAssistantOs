@@ -91,12 +91,12 @@ notify:
   - name: all_people
     platform: group
     services:
-      - service: yan
-      - service: cath
+      - action: yan
+      - action: cath
   - name: yan
     platform: group
     services:
-      - service: pushover
+      - action: pushover
         data:
           target: pixel7
 

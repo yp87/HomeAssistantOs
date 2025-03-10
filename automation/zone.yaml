@@ -9,7 +9,7 @@
     - condition: time
       before: "10:00:00"
   actions:
-    service: light.turn_off
+    action: light.turn_off
     entity_id: all
 
 - alias: Yan leaving work
@@ -23,7 +23,7 @@
       after: !secret yan_leave_work_time
       before: "23:00:00"
   actions:
-    service: notify.cath
+    action: notify.cath
     data:
       message: >
         Yan est parti du travail. Il faut
@@ -36,7 +36,7 @@
       zone: zone.work_cath
       event: leave
   actions:
-    service: notify.yan
+    action: notify.yan
     data:
       message: >
         Cath est parti du travail. Il faut

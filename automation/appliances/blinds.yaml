@@ -36,7 +36,7 @@
         attribute: preset_mode
         state: sleep
   actions:
-    - service: cover.open_cover
+    - action: cover.open_cover
       entity_id: group.all_blinds
 
 - alias: Close blinds in the evening
@@ -49,7 +49,7 @@
       attribute: preset_mode
       to: sleep
   actions:
-    - service: cover.close_cover
+    - action: cover.close_cover
       data_template:
         entity_id: >
           {% if trigger.platform == 'sun' and state_attr('cover.kitchen_window_blind', 'current_position') | int == 30 %}
@@ -68,7 +68,7 @@
     - condition: time
       after: "18:00:00"
   actions:
-    - service: cover.close_cover
+    - action: cover.close_cover
       entity_id: cover.office_window_blind
 
 - alias: Sync office blind with sun when working
@@ -85,7 +85,7 @@
         - wed
         - fri
   actions:
-    - service: >
+    - action: >
         {% if trigger.now.strftime('%H:%M:%S') == '07:00:00' %}
           switch.turn_on
         {% elif trigger.now.strftime('%H:%M:%S') == '16:20:00' %}
@@ -105,7 +105,7 @@
         - wed
         - fri
   actions:
-    - service: switch.turn_on
+    - action: switch.turn_on
       entity_id: switch.vertical_toggle_control_office
 
 - alias: Turn off office blind control in the evening on work from home days
@@ -120,5 +120,5 @@
         - wed
         - fri
   actions:
-    - service: switch.turn_off
+    - action: switch.turn_off
       entity_id: switch.vertical_toggle_control_office

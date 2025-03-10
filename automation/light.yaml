@@ -4,7 +4,7 @@
     - platform: sun
       event: sunset
   actions:
-    service: switch.turn_on
+    action: switch.turn_on
     entity_id: switch.light_front
 
 - alias: Turn on front light in the morning
@@ -15,7 +15,7 @@
     condition: sun
     before: sunrise
   actions:
-    service: switch.turn_on
+    action: switch.turn_on
     entity_id: switch.light_front
 
 - alias: Turn off front light at 10pm or sunrise
@@ -25,7 +25,7 @@
     - platform: sun
       event: sunrise
   actions:
-    service: switch.turn_off
+    action: switch.turn_off
     entity_id: switch.light_front
 
 - alias: turn off entrance light when exiting
@@ -37,7 +37,7 @@
         device_id: "e8eb5d524639cae23921eacd145bde9f"
         event_label: "Keypad lock operation"
   actions:
-    - service: light.turn_off
+    - action: light.turn_off
       entity_id: switch.entrance_light
 
 - alias: turn on entrance light when entering
@@ -56,7 +56,7 @@
         before: sunrise
         before_offset: "01:00:00"
   actions:
-    - service: script.auto_switch_on
+    - action: script.auto_switch_on
       data:
         duration_seconds: 300
         auto_entity: switch.entrance_light
@@ -72,7 +72,7 @@
     - platform: state
       entity_id: alarm_control_panel.home_alarm
   actions:
-    - service: >
+    - action: >
         {% if is_state('person.cath', 'home') and
            is_state('alarm_control_panel.home_alarm', 'disarmed') %}
           light.turn_on
@@ -102,7 +102,7 @@
               state: 103
   mode: restart
   actions:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id: light.second_floor_hallway_light
         brightness: 103
@@ -113,7 +113,7 @@
         minutes: 2
     - condition: template
       value_template: "{{ wait.trigger is none }}"
-    - service: light.turn_off
+    - action: light.turn_off
       entity_id: light.second_floor_hallway_light
 
 - alias: Turn on fred bathroom lights when motion is detected
@@ -137,7 +137,7 @@
               state: 103
   mode: restart
   actions:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id: light.frederique_bathroom
         brightness: 103
@@ -148,5 +148,5 @@
         minutes: 10
     - condition: template
       value_template: "{{ wait.trigger is none }}"
-    - service: light.turn_off
+    - action: light.turn_off
       entity_id: light.frederique_bathroom
