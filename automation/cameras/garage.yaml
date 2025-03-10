@@ -6,7 +6,7 @@
       at: "00:00:00"
     - trigger: homeassistant
       event: start
-  condition:
+  conditions:
     condition: state
     entity_id: camera.garage
     state: idle
@@ -21,7 +21,7 @@
     - trigger: state
       entity_id: binary_sensor.garage_motion_detection
       to: "on"
-  condition:
+  conditions:
     - or:
         - condition: state
           entity_id: binary_sensor.garage_door

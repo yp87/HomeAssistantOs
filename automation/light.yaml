@@ -11,7 +11,7 @@
   triggers:
     - trigger: time
       at: "05:30:00"
-  condition:
+  conditions:
     condition: sun
     before: sunrise
   actions:
@@ -47,7 +47,7 @@
       event_data:
         device_id: "e8eb5d524639cae23921eacd145bde9f"
         event_label: "Keypad unlock operation"
-  condition:
+  conditions:
     or:
       - condition: sun
         after: sunset
@@ -87,7 +87,7 @@
     - trigger: state
       entity_id: binary_sensor.second_floor_motion
       to: "on"
-  condition:
+  conditions:
     - and:
         - condition: state
           entity_id: switch.baby_monitor
@@ -122,7 +122,7 @@
     - trigger: state
       entity_id: binary_sensor.second_floor_motion
       to: "on"
-  condition:
+  conditions:
     - and:
         - condition: time
           after: "19:00:00"

@@ -5,7 +5,7 @@
       entity_id: group.all_people
       from: "home"
       to: "not_home"
-  condition:
+  conditions:
     or:
       - condition: state
         entity_id: binary_sensor.garage_door
@@ -117,7 +117,7 @@
     - trigger: state
       entity_id: binary_sensor.garage_door
       to: "on"
-  condition:
+  conditions:
     and:
       - condition: state
         entity_id: binary_sensor.garage_door

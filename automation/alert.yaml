@@ -12,7 +12,7 @@
       {{ state_attr('climate.main_floor', 'target_temp_high')|float(0) }}
     low_temp_target: >-
       {{ state_attr('climate.main_floor', 'target_temp_low')|float(0) }}
-  condition:
+  conditions:
     # if the climate was manually set.
     - >-
       {{ is_state_attr('climate.main_floor', 'preset_mode', 'temp')
@@ -96,7 +96,7 @@
     - trigger: state
       entity_id: input_boolean.yan_phone_plugged
       to: "on"
-  condition:
+  conditions:
     - condition: state
       entity_id: input_boolean.yan_had_pills
       state: "off"

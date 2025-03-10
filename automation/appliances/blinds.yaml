@@ -12,7 +12,7 @@
       at: "06:30:00"
     - trigger: time
       at: "07:00:00"
-  condition:
+  conditions:
     - condition: sun
       after: sunrise
       before: sunset
@@ -64,7 +64,7 @@
     - trigger: state
       entity_id: switch.baby_monitor
       to: "on"
-  condition:
+  conditions:
     - condition: time
       after: "18:00:00"
   actions:
@@ -78,7 +78,7 @@
       at: "07:00:00"
     - trigger: time
       at: "16:20:00"
-  condition:
+  conditions:
     - condition: time
       weekday:
         - mon
@@ -98,7 +98,7 @@
   triggers:
     - trigger: time
       at: "07:00:00"
-  condition:
+  conditions:
     - condition: time
       weekday:
         - mon
@@ -113,7 +113,7 @@
   triggers:
     - trigger: time
       at: "16:20:00"
-  condition:
+  conditions:
     - condition: time
       weekday:
         - mon

@@ -5,7 +5,7 @@
       entity_id: person.cath
       zone: zone.home
       event: leave
-  condition:
+  conditions:
     - condition: time
       before: "10:00:00"
   actions:
@@ -18,7 +18,7 @@
     entity_id: person.yan
     zone: zone.Work_yan
     event: leave
-  condition:
+  conditions:
     - condition: time
       after: !secret yan_leave_work_time
       before: "23:00:00"

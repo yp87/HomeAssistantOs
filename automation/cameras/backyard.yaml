@@ -6,7 +6,7 @@
       at: "00:00:00"
     - trigger: homeassistant
       event: start
-  condition:
+  conditions:
     condition: state
     entity_id: camera.backyard
     state: idle
@@ -21,7 +21,7 @@
     - trigger: state
       entity_id: binary_sensor.backyard_motion
       to: "on"
-  condition:
+  conditions:
     - condition: template
       value_template: >
         {{ (as_timestamp(now()) -

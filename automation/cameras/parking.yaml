@@ -6,7 +6,7 @@
       at: "00:00:00"
     - trigger: homeassistant
       event: start
-  condition:
+  conditions:
     condition: state
     entity_id: camera.parking
     state: idle

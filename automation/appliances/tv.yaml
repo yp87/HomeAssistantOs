@@ -44,7 +44,7 @@
     - trigger: state
       entity_id: remote.salon_tv
       to: "on"
-  condition:
+  conditions:
     condition: state
     entity_id: select.yharmony_activities
     state: "power_off"
@@ -60,7 +60,7 @@
     - trigger: state
       entity_id: remote.salon_tv
       to: "off"
-  condition:
+  conditions:
     condition: state
     entity_id: select.yharmony_activities
     state: "Watch TV"
@@ -76,7 +76,7 @@
     - trigger: state
       entity_id: binary_sensor.xbox
       to: "on"
-  condition:
+  conditions:
     condition: state
     entity_id: select.yharmony_activities
     state: "power_off"
@@ -92,7 +92,7 @@
     - trigger: state
       entity_id: binary_sensor.xbox
       to: "off"
-  condition:
+  conditions:
     condition: state
     entity_id: select.yharmony_activities
     state: "XBOX"
@@ -200,7 +200,7 @@
   triggers:
     - trigger: time_pattern
       seconds: "/30"
-  condition:
+  conditions:
     - condition: state
       entity_id: media_player.denon_avr_x3500h
       state: "on"
