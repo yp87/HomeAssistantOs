@@ -37,7 +37,7 @@ disarm_unlock_home:
     - action: script.auto_switch_on
       data:
         duration_seconds: 300
-        auto_entity: switch.entrance_light
+        auto_entity: switch.entryway
 
 disarm_home:
   sequence:

@@ -2,15 +2,15 @@
 all_light_switches:
   name: All light switches
   entities:
-    - switch.light_front
+    - switch.front_yard
     - switch.master_bathroom_fan
-    - switch.entrance_light
+    - switch.entryway
 
 zwave_dimmers_default_low:
   entities:
-    - light.kitchen_main_light
-    - light.living_room_main_light
-    - light.salle_de_lecture
+    - light.kitchen
+    - light.living_room
+    - light.reading_room
 
 zwave_dimmers_default_exclude:
   entities:

@@ -33,7 +33,7 @@
         entity_id: script.lights_off_except
         variables:
           exclude_lights:
-            - switch.light_front
+            - switch.front_yard
             - switch.heated_bed
             - light.frederique_bedroom
             - light.frederique_night_light

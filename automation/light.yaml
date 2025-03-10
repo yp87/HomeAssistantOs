@@ -5,7 +5,7 @@
       event: sunset
   actions:
     action: switch.turn_on
-    entity_id: switch.light_front
+    entity_id: switch.front_yard
 
 - alias: Turn on front light in the morning
   triggers:
@@ -16,7 +16,7 @@
     before: sunrise
   actions:
     action: switch.turn_on
-    entity_id: switch.light_front
+    entity_id: switch.front_yard
 
 - alias: Turn off front light at 10pm or sunrise
   triggers:
@@ -26,7 +26,7 @@
       event: sunrise
   actions:
     action: switch.turn_off
-    entity_id: switch.light_front
+    entity_id: switch.front_yard
 
 - alias: turn off entrance light when exiting
   id: turn_off_entrance_light_when_exiting
@@ -38,7 +38,7 @@
         event_label: "Keypad lock operation"
   actions:
     - action: light.turn_off
-      entity_id: switch.entrance_light
+      entity_id: switch.entryway
 
 - alias: turn on entrance light when entering
   triggers:
@@ -59,7 +59,7 @@
     - action: script.auto_switch_on
       data:
         duration_seconds: 300
-        auto_entity: switch.entrance_light
+        auto_entity: switch.entryway
 
 - alias: Update christmas lights
   triggers:
@@ -94,27 +94,27 @@
           state: "off"
         - or:
             - condition: state
-              entity_id: light.second_floor_hallway_light
+              entity_id: light.second_floor_hallway
               state: "off"
             - condition: state
-              entity_id: light.second_floor_hallway_light
+              entity_id: light.second_floor_hallway
               attribute: brightness
               state: 103
   mode: restart
   actions:
     - action: light.turn_on
       data:
-        entity_id: light.second_floor_hallway_light
+        entity_id: light.second_floor_hallway
         brightness: 103
     - wait_for_trigger:
         - trigger: state
-          entity_id: light.second_floor_hallway_light
+          entity_id: light.second_floor_hallway
       timeout:
         minutes: 2
     - condition: template
       value_template: "{{ wait.trigger is none }}"
     - action: light.turn_off
-      entity_id: light.second_floor_hallway_light
+      entity_id: light.second_floor_hallway
 
 - alias: Turn on fred bathroom lights when motion is detected
   id: Turn_on_fred_bathroom_lights_when_motion_is_detected

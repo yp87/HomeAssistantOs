@@ -103,10 +103,10 @@
         light.turn_{{ "on" if trigger.event.data.property_key_name == "001"
                       else "off"}}
       entity_id:
-        - light.kitchen_main_light
-        - light.living_room_main_light
+        - light.kitchen
+        - light.living_room
         - light.ground_floor_hallway_light
-        - light.salle_de_lecture
+        - light.reading_room
 
 - alias: Frederique main light double down
   triggers:
@@ -330,7 +330,7 @@
     - action: light.turn_on
       data:
         entity_id:
-          - light.kitchen_main_light
+          - light.kitchen
           - light.upper_stairs_light
         brightness: 40
 
@@ -369,7 +369,7 @@
   actions:
     - action: light.turn_off
       entity_id:
-        - light.kitchen_main_light
+        - light.kitchen
         - light.upper_stairs_light
 
 - alias: Fred bathroom main light single click up
