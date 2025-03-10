@@ -18,8 +18,10 @@
   mode: single
   max_exceeded: silent
   triggers:
-    - trigger: mqtt
-      topic: "camera/parking/motion"
+    - trigger: state
+      entity_id: binary_sensor.parking_motion
+      from: "off"
+      to: "on"
   actions:
     - delay: "00:00:01"
     - action: gemini_api.generate_text
@@ -35,12 +37,12 @@
           The message should be short enough simple sentence that fits in a phone notification (max 8 words).
           Reply with the message only, nothing more.
         images:
-          - /config/www/pictures/parking00001.jpg
-          - /config/www/pictures/parking00007.jpg
+          - /media/parking00001.jpg
+          - /media/parking00007.jpg
       response_variable: image_description
     - action: notify.yan
       data:
         message: "{{ image_description.text if image_description else 'Parking Motion detected' }}"
         data:
-          attachment: /config/www/pictures/parking00007.jpg
+          attachment: /media/parking00007.jpg
     - delay: "00:05:00"

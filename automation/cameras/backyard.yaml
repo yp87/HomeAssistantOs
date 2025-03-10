@@ -19,14 +19,14 @@
   max_exceeded: silent
   triggers:
     - trigger: state
-      entity_id: binary_sensor.backyard_motion
+      entity_id: binary_sensor.back_motion
       to: "on"
   conditions:
     - condition: template
       value_template: >
         {{ (as_timestamp(now()) -
             as_timestamp(states.cover.living_room_window_blind.last_changed))
-           > 20 }}
+          > 20 }}
   actions:
     - action: camera.snapshot
       data:
