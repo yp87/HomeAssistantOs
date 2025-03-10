@@ -105,7 +105,7 @@
       entity_id:
         - light.kitchen
         - light.living_room
-        - light.ground_floor_hallway_light
+        - light.ground_floor_hallway
         - light.reading_room
 
 - alias: Frederique main light double down
@@ -200,8 +200,8 @@
     - action: light.turn_on
       data:
         entity_id:
-          - light.bathroom_ceiling_light
-          - light.bathroom_mirror_light
+          - light.master_bathroom_ceiling
+          - light.master_bathroom_mirror
         brightness: 255
     - action: switch.turn_on
       data:
@@ -224,8 +224,8 @@
   actions:
     - action: light.turn_off
       entity_id:
-        - light.bathroom_ceiling_light
-        - light.bathroom_mirror_light
+        - light.master_bathroom_ceiling
+        - light.master_bathroom_mirror
     - action: script.auto_off
       data:
         auto_entity: switch.master_bathroom_fan
@@ -295,7 +295,7 @@
   actions:
     - action: light.turn_on
       data:
-        entity_id: light.bathroom_ceiling_light
+        entity_id: light.master_bathroom_ceiling
         brightness: 255
     - action: switch.turn_on
       entity_id: switch.heated_bed
@@ -323,15 +323,15 @@
   actions:
     - action: light.turn_off
       entity_id:
-        - light.bathroom_ceiling_light
-        - light.bathroom_mirror_light
+        - light.master_bathroom_ceiling
+        - light.master_bathroom_mirror
     - action: switch.turn_off
       entity_id: switch.master_bathroom_fan
     - action: light.turn_on
       data:
         entity_id:
           - light.kitchen
-          - light.upper_stairs_light
+          - light.upper_stairs
         brightness: 40
 
 - alias: bathroom any light double click down
@@ -370,7 +370,7 @@
     - action: light.turn_off
       entity_id:
         - light.kitchen
-        - light.upper_stairs_light
+        - light.upper_stairs
 
 - alias: Fred bathroom main light single click up
   id: fred_bathroom_main_light_single_click_up
@@ -390,10 +390,10 @@
   actions:
     - action: light.turn_on
       data:
-        entity_id: light.frederique_bedroom
+        entity_id: light.frederique_bathroom
         brightness: "{{ brightness }}"
     - condition: "{{ brightness == 103 }}"
     - delay: "00:10:00"
     - action: light.turn_off
       data:
-        entity_id: light.frederique_bedroom
+        entity_id: light.frederique_bathroom
