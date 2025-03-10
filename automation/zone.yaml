@@ -16,7 +16,7 @@
   triggers:
     trigger: zone
     entity_id: person.yan
-    zone: zone.Work_yan
+    zone: zone.work_yan
     event: leave
   conditions:
     - condition: time
