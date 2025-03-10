@@ -1,7 +1,7 @@
 ---
 - alias: sync photo yan
   id: sync_photo_yan
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_button.sync_photo_yan
   actions:

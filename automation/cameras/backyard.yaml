@@ -1,7 +1,7 @@
 ---
 - alias: Sync backyard camera time
   id: sync_backyard_camera_time
-  trigger:
+  triggers:
     - platform: time
       at: "00:00:00"
     - platform: homeassistant
@@ -17,7 +17,7 @@
   id: Notify_when_motion_in_backyard
   mode: single
   max_exceeded: silent
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.backyard_motion
       to: "on"

@@ -1,7 +1,7 @@
 ---
 - alias: Alert when house heating is out of normal parameters
   id: Alert_when_house_heating_is_out_of_normal_parameters
-  trigger:
+  triggers:
     platform: state
     entity_id: climate.main_floor
   variables:
@@ -48,7 +48,7 @@
 
 - alias: Alert for food
   id: alert_for_food
-  trigger:
+  triggers:
     platform: time
     at: "12:45:00"
   actions:
@@ -63,7 +63,7 @@
         language: "fr"
 
 - alias: Home assistant started notification
-  trigger:
+  triggers:
     platform: homeassistant
     event: start
   actions:
@@ -81,7 +81,7 @@
         message: "Home Assistant started."
 
 - alias: Alert midnight resets
-  trigger:
+  triggers:
     - platform: time
       at: "00:00:00"
   actions:
@@ -90,7 +90,7 @@
 
 - alias: yan pills notify
   id: yan_pills_notify
-  trigger:
+  triggers:
     - platform: time
       at: "21:00:00"
     - platform: state
@@ -142,7 +142,7 @@
       entity_id: light.table_de_chevet_de_yan
 
 - alias: Notify when device has low battery
-  trigger:
+  triggers:
     platform: numeric_state
     entity_id:
       - sensor.fridge_door_battery_level

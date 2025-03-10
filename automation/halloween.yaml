@@ -1,6 +1,6 @@
 ---
 - alias: Halloween spooky lights
-  trigger:
+  triggers:
     platform: state
     entity_id: input_boolean.halloween
     to: "on"

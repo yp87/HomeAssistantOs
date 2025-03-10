@@ -1,7 +1,7 @@
 ---
 - alias: Fridge door opened for too long
   id: Fridge_door_opened_for_too_long
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.fridge_door
       to: "on"

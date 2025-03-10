@@ -1,7 +1,7 @@
 ---
 - alias: Hue restart integration event workaround
   id: Hue_restart_integration_event_workaround
-  trigger:
+  triggers:
     platform: time
     at: "19:00:00"
   actions:
@@ -11,7 +11,7 @@
 
 - alias: Hue remote automation - Long Press Off
   id: Hue_remote_automation_Long_Press_Off
-  trigger:
+  triggers:
     - platform: event
       event_type: hue_event
       event_data:
@@ -65,7 +65,7 @@
         seconds: 10
 
 - alias: Hue remote automation - Long Press ON
-  trigger:
+  triggers:
     - platform: event
       event_type: hue_event
       event_data:

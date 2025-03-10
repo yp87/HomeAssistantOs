@@ -1,7 +1,7 @@
 ---
 - alias: Sync garage camera time
   id: sync_garage_camera_time
-  trigger:
+  triggers:
     - platform: time
       at: "00:00:00"
     - platform: homeassistant
@@ -17,7 +17,7 @@
   id: Notify_when_motion_in_garage
   mode: single
   max_exceeded: silent
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.garage_motion_detection
       to: "on"
@@ -45,7 +45,7 @@
   id: Garage_door_button_pushed
   mode: single
   max_exceeded: silent
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_button.garage_door
   actions:

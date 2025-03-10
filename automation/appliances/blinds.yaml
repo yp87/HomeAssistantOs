@@ -1,7 +1,7 @@
 ---
 - alias: Open blinds in the morning
   id: open_blinds_in_the_morning
-  trigger:
+  triggers:
     - platform: sun
       event: sunrise
     - platform: state
@@ -41,7 +41,7 @@
 
 - alias: Close blinds in the evening
   id: close_blinds_in_the_evening
-  trigger:
+  triggers:
     - platform: sun
       event: sunset
     - platform: state
@@ -60,7 +60,7 @@
 
 - alias: CLose office blind when kid goes to sleep
   id: cLose_office_blind_when_kid_goes_to_sleep
-  trigger:
+  triggers:
     - platform: state
       entity_id: switch.baby_monitor
       to: "on"
@@ -73,7 +73,7 @@
 
 - alias: Sync office blind with sun when working
   id: sync_office_blind_with_sun_when_working
-  trigger:
+  triggers:
     - platform: time
       at: "07:00:00"
     - platform: time
@@ -95,7 +95,7 @@
 
 - alias: Turn on office blind control in the morning on work from home days
   id: turn_on_office_blind_control_in_the_morning_on_work_from_home_days
-  trigger:
+  triggers:
     - platform: time
       at: "07:00:00"
   condition:
@@ -110,7 +110,7 @@
 
 - alias: Turn off office blind control in the evening on work from home days
   id: turn_off_office_blind_control_in_the_evening_on_work_from_home_days
-  trigger:
+  triggers:
     - platform: time
       at: "16:20:00"
   condition:

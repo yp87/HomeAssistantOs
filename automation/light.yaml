@@ -1,6 +1,6 @@
 ---
 - alias: Turn on front light at sunset
-  trigger:
+  triggers:
     - platform: sun
       event: sunset
   actions:
@@ -8,7 +8,7 @@
     entity_id: switch.light_front
 
 - alias: Turn on front light in the morning
-  trigger:
+  triggers:
     - platform: time
       at: "05:30:00"
   condition:
@@ -19,7 +19,7 @@
     entity_id: switch.light_front
 
 - alias: Turn off front light at 10pm or sunrise
-  trigger:
+  triggers:
     - platform: time
       at: "22:00:00"
     - platform: sun
@@ -30,7 +30,7 @@
 
 - alias: turn off entrance light when exiting
   id: turn_off_entrance_light_when_exiting
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_notification
       event_data:
@@ -41,7 +41,7 @@
       entity_id: switch.entrance_light
 
 - alias: turn on entrance light when entering
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_notification
       event_data:
@@ -62,7 +62,7 @@
         auto_entity: switch.entrance_light
 
 - alias: Update christmas lights
-  trigger:
+  triggers:
     - platform: state
       entity_id: person.cath
       from: "home"
@@ -83,7 +83,7 @@
 
 - alias: Turn on second floor hallway lights when motion is detected
   id: Turn_on_second_floor_hallway_lights_when_motion_is_detected
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.second_floor_motion
       to: "on"
@@ -118,7 +118,7 @@
 
 - alias: Turn on fred bathroom lights when motion is detected
   id: Turn_on_fred_bathroom_lights_when_motion_is_detected
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.second_floor_motion
       to: "on"

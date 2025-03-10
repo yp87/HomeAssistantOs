@@ -1,6 +1,6 @@
 ---
 - alias: Cath leaving home
-  trigger:
+  triggers:
     - platform: zone
       entity_id: person.cath
       zone: zone.home
@@ -13,7 +13,7 @@
     entity_id: all
 
 - alias: Yan leaving work
-  trigger:
+  triggers:
     platform: zone
     entity_id: person.yan
     zone: zone.Work_yan
@@ -30,7 +30,7 @@
         {{ states('sensor.yantohome') }} minutes pour rentrer à la maison.
 
 - alias: Cath leaving work
-  trigger:
+  triggers:
     - platform: zone
       entity_id: person.cath
       zone: zone.work_cath

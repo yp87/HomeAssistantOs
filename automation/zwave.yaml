@@ -18,7 +18,7 @@
 # light.frederique_bathroom: 15b0ac46cbfa569a366379db4d521b98
 # ------------------------------
 - alias: Frederique main light brightness
-  trigger:
+  triggers:
     - platform: state
       entity_id: light.frederique_bedroom
       attribute: brightness
@@ -40,7 +40,7 @@
            (state_attr('light.frederique_bedroom', 'brightness')|int(0)) }}
 
 - alias: Frederique main light triple up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -54,7 +54,7 @@
         brightness: 255
 
 - alias: Frederique main light triple down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -69,7 +69,7 @@
           - light.frederique_bedroom
 
 - alias: Stairs double down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -92,7 +92,7 @@
 
 - alias: Kitchen double up/down
   id: kitchen_double_up_down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -109,7 +109,7 @@
         - light.salle_de_lecture
 
 - alias: Frederique main light double down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -135,7 +135,7 @@
           media_player_id: media_player.bureau
 
 - alias: Frederique main light single up or release from hold up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -161,7 +161,7 @@
           media_player_id: media_player.bureau
 
 - alias: Set zwave light to default when single click up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -189,7 +189,7 @@
         entity_id: "{{ light_entity_id }}"
 
 - alias: Bathroom ceiling light single click up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -208,7 +208,7 @@
         entity_id: switch.master_bathroom_fan
 
 - alias: bathroom any light single click down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -232,7 +232,7 @@
         duration_seconds: 1800
 
 - alias: bathroom fan double click up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -246,7 +246,7 @@
         duration_seconds: 1800
 
 - alias: bathroom fan triple click up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -260,7 +260,7 @@
         duration_seconds: 3600
 
 - alias: bathroom any light double click up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -285,7 +285,7 @@
 
 - alias: bathroom ceiling triple click up
   id: bathroom_ceiling_triple_click_up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -302,7 +302,7 @@
 
 - alias: Heated bed turn off after 20 minutes
   id: Heated_bed_turn_off_after_20_minutes
-  trigger:
+  triggers:
     - platform: state
       entity_id: switch.heated_bed
       to: "on"
@@ -313,7 +313,7 @@
       entity_id: switch.heated_bed
 
 - alias: bathroom ceiling tripple click down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -336,7 +336,7 @@
 
 - alias: bathroom any light double click down
   id: bathroom_any_light_double_click_down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -359,7 +359,7 @@
         entity_id: "{{ light_entity_id }}"
 
 - alias: front light double click down
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:
@@ -374,7 +374,7 @@
 
 - alias: Fred bathroom main light single click up
   id: fred_bathroom_main_light_single_click_up
-  trigger:
+  triggers:
     - platform: event
       event_type: zwave_js_value_notification
       event_data:

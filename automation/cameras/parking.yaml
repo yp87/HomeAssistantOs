@@ -1,7 +1,7 @@
 ---
 - alias: Sync parking camera time
   id: sync_parking_camera_time
-  trigger:
+  triggers:
     - platform: time
       at: "00:00:00"
     - platform: homeassistant
@@ -17,7 +17,7 @@
   id: Notify_when_motion_in_parking
   mode: single
   max_exceeded: silent
-  trigger:
+  triggers:
     - trigger: mqtt
       topic: "camera/parking/motion"
   actions:
