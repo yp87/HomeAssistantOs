@@ -93,14 +93,17 @@
 - alias: Kitchen double up/down
   id: kitchen_double_up_down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "c67fd05c899d2f3d80ac784e7b648614"
-        value: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.kitchen_scene_001
+      attribute: event_type
+      to: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.kitchen_scene_002
+      attribute: event_type
+      to: "KeyPressed2x"
   actions:
     - action: >
-        light.turn_{{ "on" if trigger.event.data.property_key_name == "001"
+        light.turn_{{ "on" if trigger.entity_id.endswith("001")
                       else "off"}}
       entity_id:
         - light.kitchen
@@ -161,6 +164,7 @@
           media_player_id: media_player.bureau
 
 - alias: Set zwave light to default when single click up
+  id: Set_zwave_light_to_default_when_single_click_up
   triggers:
     - trigger: event
       event_type: zwave_js_value_notification
@@ -169,7 +173,7 @@
         property_key_name: "001"
   variables:
     light_entity_id: >-
-      {{ device_entities(trigger.event.data.device_id) | first }}
+      {{ device_entities(trigger.event.data.device_id)|select('match', 'light\\.')|first }}
   condition: >-
     {{ states(light_entity_id) != "unknown" and
        light_entity_id not in states.group.zwave_dimmers_default_exclude.attributes.entity_id }}
