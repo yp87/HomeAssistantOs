@@ -146,10 +146,10 @@
     trigger: numeric_state
     entity_id:
       - sensor.fridge_door_battery_level
-      - sensor.front_door_lock_battery
-      - sensor.garage_door_lock_battery
+      - sensor.front_door_lock_battery_level
+      - sensor.garage_door_lock_battery_level
       - sensor.washer_leak_sensor_battery
-      - sensor.hue_dimmer_switch_1_battery_level
+      - sensor.hue_dimmer_switch_1_battery
     below: 20
   mode: parallel
   actions:

@@ -43,11 +43,9 @@
       data:
         entity_id: climate.main_floor
         preset_mode: sleep
-    - action: script.turn_off
-      entity_id: script.increase_basement_heating
     - action: climate.set_temperature
       data:
-        entity_id: climate.chauffage_sous_sol_thermostat
+        entity_id: climate.basement_thermostat
         temperature: 19
 
     - action: media_player.volume_set

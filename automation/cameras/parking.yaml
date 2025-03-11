@@ -19,7 +19,7 @@
   max_exceeded: silent
   triggers:
     - trigger: state
-      entity_id: binary_sensor.parking_motion
+      entity_id: binary_sensor.parking_motion_detection
       from: "off"
       to: "on"
   actions:

@@ -19,7 +19,7 @@
   max_exceeded: silent
   triggers:
     - trigger: state
-      entity_id: binary_sensor.back_motion
+      entity_id: binary_sensor.backyard_motion_detection
       to: "on"
   conditions:
     - condition: template
