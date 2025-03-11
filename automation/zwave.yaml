@@ -25,8 +25,10 @@
   triggers:
     - trigger: state
       entity_id: event.frederique_bedroom_scene_001
-      attribute: event_type
-      to: "KeyPressed3x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed3x' }}
   actions:
     - action: light.turn_on
       data:
@@ -37,8 +39,10 @@
   triggers:
     - trigger: state
       entity_id: event.frederique_bedroom_scene_002
-      attribute: event_type
-      to: "KeyPressed3x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed3x' }}
   actions:
     - action: light.turn_off
       data:
@@ -49,13 +53,13 @@
 - alias: Stairs double down
   triggers:
     - trigger: state
-      entity_id: event.upper_stairs_scene_002
-      attribute: event_type
-      to: "KeyPressed2x"
-    - trigger: state
-      entity_id: event.ground_floor_hallway_scene_002
-      attribute: event_type
-      to: "KeyPressed2x"
+      entity_id:
+        - event.upper_stairs_scene_002
+        - event.ground_floor_hallway_scene_002
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   actions:
     - action: light.turn_on
       data:
@@ -68,13 +72,13 @@
   id: kitchen_double_up_down
   triggers:
     - trigger: state
-      entity_id: event.kitchen_scene_001
-      attribute: event_type
-      to: "KeyPressed2x"
-    - trigger: state
-      entity_id: event.kitchen_scene_002
-      attribute: event_type
-      to: "KeyPressed2x"
+      entity_id:
+        - event.kitchen_scene_001
+        - event.kitchen_scene_002
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   actions:
     - action: >
         light.turn_{{ "on" if trigger.entity_id.endswith("001")
@@ -89,8 +93,10 @@
   triggers:
     - trigger: state
       entity_id: event.frederique_bedroom_scene_002
-      attribute: event_type
-      to: "KeyPressed2x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   actions:
     - action: light.turn_off
       data:
@@ -113,12 +119,10 @@
   triggers:
     - trigger: state
       entity_id: event.frederique_bedroom_scene_001
-      attribute: event_type
-      to: "KeyPressed"
-    - trigger: state
-      entity_id: event.frederique_bedroom_scene_001
-      attribute: event_type
-      to: "KeyHeldDown"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') in ['KeyPressed','KeyHeldDown'] }}
   mode: single
   max_exceeded: silent
   actions:
@@ -164,8 +168,10 @@
   triggers:
     - trigger: state
       entity_id: event.master_bathroom_ceiling_scene_001
-      attribute: event_type
-      to: "KeyPressed"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed' }}
   actions:
     - action: light.turn_on
       data:
@@ -180,13 +186,13 @@
 - alias: bathroom any light single click down
   triggers:
     - trigger: state
-      entity_id: event.master_bathroom_ceiling_scene_002
-      attribute: event_type
-      to: "KeyPressed"
-    - trigger: state
-      entity_id: event.master_bathroom_mirror_scene_002
-      attribute: event_type
-      to: "KeyPressed"
+      entity_id:
+        - event.master_bathroom_ceiling_scene_002
+        - event.master_bathroom_mirror_scene_002
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed' }}
   actions:
     - action: light.turn_off
       entity_id:
@@ -201,8 +207,10 @@
   triggers:
     - trigger: state
       entity_id: event.master_bathroom_fan_scene_001
-      attribute: event_type
-      to: "KeyPressed2x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   actions:
     - action: script.auto_switch_on
       data:
@@ -213,8 +221,10 @@
   triggers:
     - trigger: state
       entity_id: event.master_bathroom_fan_scene_001
-      attribute: event_type
-      to: "KeyPressed3x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed3x' }}
   actions:
     - action: script.auto_switch_on
       data:
@@ -224,13 +234,13 @@
 - alias: bathroom any light double click up
   triggers:
     - trigger: state
-      entity_id: event.master_bathroom_ceiling_scene_001
-      attribute: event_type
-      to: "KeyPressed2x"
-    - trigger: state
-      entity_id: event.master_bathroom_mirror_scene_001
-      attribute: event_type
-      to: "KeyPressed2x"
+      entity_id:
+        - event.master_bathroom_ceiling_scene_001
+        - event.master_bathroom_mirror_scene_001
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   variables:
     light_entity_id: >-
       {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
@@ -246,8 +256,10 @@
   triggers:
     - trigger: state
       entity_id: event.master_bathroom_ceiling_scene_001
-      attribute: event_type
-      to: "KeyPressed3x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed3x' }}
   actions:
     - action: light.turn_on
       data:
@@ -272,8 +284,10 @@
   triggers:
     - trigger: state
       entity_id: event.master_bathroom_ceiling_scene_002
-      attribute: event_type
-      to: "KeyPressed3x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed3x' }}
   actions:
     - action: light.turn_off
       entity_id:
@@ -292,13 +306,13 @@
   id: bathroom_any_light_double_click_down
   triggers:
     - trigger: state
-      entity_id: event.master_bathroom_ceiling_scene_002
-      attribute: event_type
-      to: "KeyPressed2x"
-    - trigger: state
-      entity_id: event.master_bathroom_mirror_scene_002
-      attribute: event_type
-      to: "KeyPressed2x"
+      entity_id:
+        - event.master_bathroom_ceiling_scene_002
+        - event.master_bathroom_mirror_scene_002
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   variables:
     light_entity_id: >-
       {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
@@ -312,8 +326,10 @@
   triggers:
     - trigger: state
       entity_id: event.front_yard_scene_002
-      attribute: event_type
-      to: "KeyPressed2x"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   actions:
     - action: light.turn_off
       entity_id:
@@ -325,8 +341,10 @@
   triggers:
     - trigger: state
       entity_id: event.frederique_bathroom_scene_001
-      attribute: event_type
-      to: "KeyPressed"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed' }}
   mode: single
   max_exceeded: silent
   variables:
