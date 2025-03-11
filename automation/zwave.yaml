@@ -184,6 +184,7 @@
         entity_id: switch.master_bathroom_fan
 
 - alias: bathroom any light single click down
+  id: bathroom_any_light_single_click_down
   triggers:
     - trigger: state
       entity_id:
@@ -198,10 +199,12 @@
       entity_id:
         - light.master_bathroom_ceiling
         - light.master_bathroom_mirror
-    - action: script.auto_off
+    - action: script.turn_on
       data:
-        auto_entity: switch.master_bathroom_fan
-        duration_seconds: 1800
+        entity_id: script.auto_off
+        variables:
+          auto_entity: switch.master_bathroom_fan
+          duration_seconds: 1800
 
 - alias: bathroom fan double click up
   triggers:
