@@ -237,14 +237,14 @@
       entity_id:
         - event.master_bathroom_ceiling_scene_001
         - event.master_bathroom_mirror_scene_001
+  variables:
+    light_entity_id: >-
+      {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
   conditions:
     - condition: template
       value_template: >
         {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
-  variables:
-    light_entity_id: >-
-      {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
-  condition: '{{ states(light_entity_id) != "unknown" }}'
+    - '{{ states(light_entity_id) != "unknown" }}'
   actions:
     - action: light.turn_on
       data:
@@ -309,14 +309,14 @@
       entity_id:
         - event.master_bathroom_ceiling_scene_002
         - event.master_bathroom_mirror_scene_002
+  variables:
+    light_entity_id: >-
+      {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
   conditions:
     - condition: template
       value_template: >
         {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
-  variables:
-    light_entity_id: >-
-      {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
-  condition: '{{ states(light_entity_id) != "unknown" }}'
+    - '{{ states(light_entity_id) != "unknown" }}'
   actions:
     - action: light.turn_off
       data:
