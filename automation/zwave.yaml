@@ -1,22 +1,4 @@
 ---
-# ------------------------------
-# zwave_js_value_notification
-# trigger.event.data.property_key_name 001 (up) 002 (down)
-# trigger.event.data.value KeyHeldDown KeyPressed KeyPressed2x KeyPressed3x
-# trigger.event.data.device_id
-# Entity_id: device_id
-# light.master_bathroom_ceiling: 687e9fab2b3ccfa16ac3a198bafcacfe
-# light.master_bathroom_mirror: 30baf8ef23184ea404f526731fedeee5
-# light.frederique_bedroom: b12002d63d77d5494057952f1917006a
-# light.ground_floor_hallway: baff7d7087c930454730b4be59a3ceb7
-# light.kitchen: c67fd05c899d2f3d80ac784e7b648614
-# light.living_room: c8ca1d8d1050852ccc60689a6cc90f7d
-# light.upper_stairs: a65e672f9a9e0ff64184a210fd25eea4
-# switch.entryway: a65e672f9a9e0ff64184a210fd25eea4
-# switch.front_yard: 8377c854a76dfb8ea465f9bfcf085490
-# switch.master_bathroom_fan: 36989a6f46ef190b09beec8db9f81168
-# light.frederique_bathroom: 15b0ac46cbfa569a366379db4d521b98
-# ------------------------------
 - alias: Frederique main light brightness
   triggers:
     - trigger: state
@@ -41,12 +23,10 @@
 
 - alias: Frederique main light triple up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "b12002d63d77d5494057952f1917006a"
-        property_key_name: "001"
-        value: "KeyPressed3x"
+    - trigger: state
+      entity_id: event.frederique_bedroom_scene_001
+      attribute: event_type
+      to: "KeyPressed3x"
   actions:
     - action: light.turn_on
       data:
@@ -55,12 +35,10 @@
 
 - alias: Frederique main light triple down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "b12002d63d77d5494057952f1917006a"
-        property_key_name: "002"
-        value: "KeyPressed3x"
+    - trigger: state
+      entity_id: event.frederique_bedroom_scene_002
+      attribute: event_type
+      to: "KeyPressed3x"
   actions:
     - action: light.turn_off
       data:
@@ -70,18 +48,14 @@
 
 - alias: Stairs double down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "a65e672f9a9e0ff64184a210fd25eea4"
-        property_key_name: "002"
-        value: "KeyPressed2x"
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "baff7d7087c930454730b4be59a3ceb7"
-        property_key_name: "002"
-        value: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.upper_stairs_scene_002
+      attribute: event_type
+      to: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.ground_floor_hallway_scene_002
+      attribute: event_type
+      to: "KeyPressed2x"
   actions:
     - action: light.turn_on
       data:
@@ -113,12 +87,10 @@
 
 - alias: Frederique main light double down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "b12002d63d77d5494057952f1917006a"
-        property_key_name: "002"
-        value: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.frederique_bedroom_scene_002
+      attribute: event_type
+      to: "KeyPressed2x"
   actions:
     - action: light.turn_off
       data:
@@ -139,18 +111,14 @@
 
 - alias: Frederique main light single up or release from hold up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "b12002d63d77d5494057952f1917006a"
-        property_key_name: "001"
-        value: "KeyPressed"
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "b12002d63d77d5494057952f1917006a"
-        property_key_name: "001"
-        value: "KeyHeldDown"
+    - trigger: state
+      entity_id: event.frederique_bedroom_scene_001
+      attribute: event_type
+      to: "KeyPressed"
+    - trigger: state
+      entity_id: event.frederique_bedroom_scene_001
+      attribute: event_type
+      to: "KeyHeldDown"
   mode: single
   max_exceeded: silent
   actions:
@@ -194,12 +162,10 @@
 
 - alias: Bathroom ceiling light single click up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
-        property_key_name: "001"
-        value: "KeyPressed"
+    - trigger: state
+      entity_id: event.master_bathroom_ceiling_scene_001
+      attribute: event_type
+      to: "KeyPressed"
   actions:
     - action: light.turn_on
       data:
@@ -213,18 +179,14 @@
 
 - alias: bathroom any light single click down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
-        property_key_name: "002"
-        value: "KeyPressed"
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "30baf8ef23184ea404f526731fedeee5"
-        property_key_name: "002"
-        value: "KeyPressed"
+    - trigger: state
+      entity_id: event.master_bathroom_ceiling_scene_002
+      attribute: event_type
+      to: "KeyPressed"
+    - trigger: state
+      entity_id: event.master_bathroom_mirror_scene_002
+      attribute: event_type
+      to: "KeyPressed"
   actions:
     - action: light.turn_off
       entity_id:
@@ -237,12 +199,10 @@
 
 - alias: bathroom fan double click up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "36989a6f46ef190b09beec8db9f81168"
-        property_key_name: "001"
-        value: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.master_bathroom_fan_scene_001
+      attribute: event_type
+      to: "KeyPressed2x"
   actions:
     - action: script.auto_switch_on
       data:
@@ -251,12 +211,10 @@
 
 - alias: bathroom fan triple click up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "36989a6f46ef190b09beec8db9f81168"
-        property_key_name: "001"
-        value: "KeyPressed3x"
+    - trigger: state
+      entity_id: event.master_bathroom_fan_scene_001
+      attribute: event_type
+      to: "KeyPressed3x"
   actions:
     - action: script.auto_switch_on
       data:
@@ -265,21 +223,17 @@
 
 - alias: bathroom any light double click up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
-        property_key_name: "001"
-        value: "KeyPressed2x"
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "30baf8ef23184ea404f526731fedeee5"
-        property_key_name: "001"
-        value: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.master_bathroom_ceiling_scene_001
+      attribute: event_type
+      to: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.master_bathroom_mirror_scene_001
+      attribute: event_type
+      to: "KeyPressed2x"
   variables:
     light_entity_id: >-
-      {{ device_entities(trigger.event.data.device_id) | first }}
+      {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   actions:
     - action: light.turn_on
@@ -290,12 +244,10 @@
 - alias: bathroom ceiling triple click up
   id: bathroom_ceiling_triple_click_up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
-        property_key_name: "001"
-        value: "KeyPressed3x"
+    - trigger: state
+      entity_id: event.master_bathroom_ceiling_scene_001
+      attribute: event_type
+      to: "KeyPressed3x"
   actions:
     - action: light.turn_on
       data:
@@ -318,12 +270,10 @@
 
 - alias: bathroom ceiling tripple click down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
-        property_key_name: "002"
-        value: "KeyPressed3x"
+    - trigger: state
+      entity_id: event.master_bathroom_ceiling_scene_002
+      attribute: event_type
+      to: "KeyPressed3x"
   actions:
     - action: light.turn_off
       entity_id:
@@ -341,21 +291,17 @@
 - alias: bathroom any light double click down
   id: bathroom_any_light_double_click_down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "687e9fab2b3ccfa16ac3a198bafcacfe"
-        property_key_name: "002"
-        value: "KeyPressed2x"
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "30baf8ef23184ea404f526731fedeee5"
-        property_key_name: "002"
-        value: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.master_bathroom_ceiling_scene_002
+      attribute: event_type
+      to: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.master_bathroom_mirror_scene_002
+      attribute: event_type
+      to: "KeyPressed2x"
   variables:
     light_entity_id: >-
-      {{ device_entities(trigger.event.data.device_id) | first }}
+      {{ device_entities(device_id(trigger.entity_id))|select('match', 'light\\.')|first | first }}
   condition: '{{ states(light_entity_id) != "unknown" }}'
   actions:
     - action: light.turn_off
@@ -364,12 +310,10 @@
 
 - alias: front light double click down
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "8377c854a76dfb8ea465f9bfcf085490"
-        property_key_name: "002"
-        value: "KeyPressed2x"
+    - trigger: state
+      entity_id: event.front_yard_scene_002
+      attribute: event_type
+      to: "KeyPressed2x"
   actions:
     - action: light.turn_off
       entity_id:
@@ -379,12 +323,10 @@
 - alias: Fred bathroom main light single click up
   id: fred_bathroom_main_light_single_click_up
   triggers:
-    - trigger: event
-      event_type: zwave_js_value_notification
-      event_data:
-        device_id: "15b0ac46cbfa569a366379db4d521b98"
-        property_key_name: "001"
-        value: "KeyPressed"
+    - trigger: state
+      entity_id: event.frederique_bathroom_scene_001
+      attribute: event_type
+      to: "KeyPressed"
   mode: single
   max_exceeded: silent
   variables:
