@@ -13,13 +13,13 @@
             entity_id: light.frederique_night_light
             brightness: >-
               {{ state_attr('light.frederique_bedroom', 'brightness')
-                 |int(0) }}
+                |int(0) }}
         - delay:
             milliseconds: 500
       until: >-
         {{ (state_attr('light.frederique_night_light', 'brightness')|int(0))
-           ==
-           (state_attr('light.frederique_bedroom', 'brightness')|int(0)) }}
+          ==
+          (state_attr('light.frederique_bedroom', 'brightness')|int(0)) }}
 
 - alias: Frederique main light triple up
   triggers:
@@ -148,7 +148,7 @@
       {{ device_entities(trigger.event.data.device_id)|select('match', 'light\\.')|first }}
   condition: >-
     {{ states(light_entity_id) != "unknown" and
-       light_entity_id not in states.group.zwave_dimmers_default_exclude.attributes.entity_id }}
+      light_entity_id not in states.group.zwave_dimmers_default_exclude.attributes.entity_id }}
   actions:
     - action: light.turn_on
       data:
