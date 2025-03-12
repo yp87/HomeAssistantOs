@@ -99,6 +99,12 @@ notify:
       - service: pushover
         data:
           target: pixel7
+  - name: cath
+    platform: group
+    services:
+      - service: pushover
+        data:
+          target: cath
 
 shell_command:
   set_garage_camera_time: !secret camera_garage_set_time_template
