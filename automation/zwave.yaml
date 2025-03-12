@@ -98,22 +98,7 @@
       value_template: >
         {{ state_attr(trigger.entity_id, 'event_type') == 'KeyPressed2x' }}
   actions:
-    - action: light.turn_off
-      data:
-        entity_id: light.frederique_bedroom
-    - action: switch.turn_on
-      data:
-        entity_id: switch.baby_monitor
-    - action: script.turn_on
-      data:
-        entity_id: script.white_noise_stop
-        variables:
-          media_player_id: media_player.bureau
-    - action: script.turn_on
-      data:
-        entity_id: script.white_noise_start
-        variables:
-          media_player_id: media_player.bureau
+    - action: script.frederique_sleep
 
 - alias: Frederique main light single up or release from hold up
   triggers:
