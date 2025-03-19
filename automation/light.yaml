@@ -82,7 +82,7 @@
         {% else %}
           light.turn_off
         {% endif %}
-      # entity_id: light.twinkly_a80df9
+        entity_id: light.twinkly_a80df9
 
 - alias: Turn on second floor hallway lights when motion is detected
   id: Turn_on_second_floor_hallway_lights_when_motion_is_detected

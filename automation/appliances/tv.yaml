@@ -16,6 +16,7 @@
       {% endif %}
   actions:
     - action: notify.tv
+      continue_on_error: true
       data:
         message: "{{ name }}'s phone is ringing"
 
@@ -35,6 +36,7 @@
   mode: queued
   actions:
     - action: notify.tv
+      continue_on_error: true
       data:
         message: "{{ name }} received a message"
 

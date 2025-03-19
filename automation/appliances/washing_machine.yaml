@@ -13,6 +13,7 @@
         effect: Knight rider
         priority: 100
     - action: notify.tv
+      continue_on_error: true
       data:
         message: "Washing machine is leaking"
     - repeat:

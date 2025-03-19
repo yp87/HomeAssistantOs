@@ -149,8 +149,7 @@
       - sensor.front_door_lock_battery_level
       - sensor.garage_door_lock_battery_level
       - sensor.washer_leak_sensor_battery
-      - sensor.hue_dimmer_switch_1_battery
-    below: 20
+    below: 10
   mode: parallel
   actions:
     - repeat:
