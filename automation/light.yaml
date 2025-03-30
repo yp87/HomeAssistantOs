@@ -127,6 +127,8 @@
       to: "on"
   conditions:
     - and:
+        # Enforce a 10 minutes cooldown when light is manually turned off
+        - "{{ (now()|as_timestamp - states('event.frederique_bathroom_scene_002')|as_timestamp) > 600 }}"
         - condition: time
           after: "19:00:00"
           before: "07:00:00"
