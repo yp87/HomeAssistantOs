@@ -1,5 +1,6 @@
 ---
 - alias: Cath leaving home
+  id: cath_leaving_home
   triggers:
     - trigger: zone
       entity_id: person.cath
