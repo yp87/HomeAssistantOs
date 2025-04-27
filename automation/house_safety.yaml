@@ -240,3 +240,31 @@
     - action: notify.yan
       data:
         message: La porte de garage est maintenant fermée.
+
+- alias: deactivate house safety when cleaning
+  id: deactivate_house_safety_when_cleaning
+  triggers:
+    - trigger: state
+      entity_id: input_select.house_mode
+      to: Cleaning
+  actions:
+    - action: automation.turn_off
+      entity_id: automation.everyone_has_left
+    - action: automation.turn_off
+      entity_id: automation.auto_lock_front_door
+
+- alias: activate house safety when not cleaning
+  id: activate_house_safety_when_not_cleaning
+  triggers:
+    - trigger: state
+      entity_id: input_select.house_mode
+  conditions:
+    - not:
+        condition: state
+        entity_id: input_select.house_mode
+        state: Cleaning
+  actions:
+    - action: automation.turn_on
+      entity_id: automation.everyone_has_left
+    - action: automation.turn_on
+      entity_id: automation.auto_lock_front_door

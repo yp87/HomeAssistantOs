@@ -6,10 +6,6 @@
       at: "00:00:00"
     - trigger: homeassistant
       event: start
-  conditions:
-    condition: state
-    entity_id: camera.backyard
-    state: idle
   actions:
     - action: shell_command.set_rear_window_camera_time
 

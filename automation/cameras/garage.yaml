@@ -6,10 +6,6 @@
       at: "00:00:00"
     - trigger: homeassistant
       event: start
-  conditions:
-    condition: state
-    entity_id: camera.garage
-    state: idle
   actions:
     - action: shell_command.set_garage_camera_time
 
