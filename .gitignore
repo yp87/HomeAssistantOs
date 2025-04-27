@@ -15,9 +15,6 @@ known_devices.yaml
 # Ignore storage
 .storage/
 
-# Ignore frigate
-frigate.yaml
-
 # Ignore everything in the custom_components directory
 custom_components/**
 

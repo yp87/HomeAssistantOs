@@ -1,0 +1,53 @@
+---
+- alias: Set home to cleaning
+  id: set_home_to_cleaning
+  triggers:
+    - trigger: calendar
+      event: start
+      entity_id: calendar.parents
+  conditions:
+    - !secret cleaning_template_condition
+  actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.house_mode
+      data:
+        option: Cleaning
+
+- alias: Unset home from cleaning
+  id: unset_home_to_cleaning
+  triggers:
+    - trigger: calendar
+      event: end
+      entity_id: calendar.parents
+  conditions:
+    - !secret cleaning_template_condition
+  actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.house_mode
+      data:
+        option: Unknown
+
+- alias: Check if house mode should be cleaning
+  id: Check_if_house_mode_should_be_cleaning
+  triggers:
+    - trigger: state
+      entity_id: input_select.house_mode
+      to: Unknown
+    - trigger: homeassistant
+      event: start
+  conditions:
+    - condition: state
+      entity_id: calendar.parents
+      state: "on"
+    - condition: state
+      entity_id: calendar.parents
+      attribute: message
+      state: !secret cleaning_calendar_event
+  actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.house_mode
+      data:
+        option: Cleaning

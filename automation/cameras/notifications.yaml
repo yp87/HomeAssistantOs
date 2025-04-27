@@ -1,0 +1,18 @@
+---
+- alias: Camera object detected notification
+  id: Camera_object_detected_notification
+  use_blueprint:
+    path: SgtBatten/Stable.yaml
+    input:
+      presence_filter:
+        - ""
+      camera:
+        - camera.parking
+        - camera.backyard
+        - camera.garage
+      notify_device: 7fc8c26006c6785b6a8105e5e0ae4c1e
+      base_url: !secret homeassistant_base_url
+      alert_once: true
+      cooldown: 5
+      url_3: /ccab4aaf_frigate-proxy/dashboard
+      button_3: Frigate
