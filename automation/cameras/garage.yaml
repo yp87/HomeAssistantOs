@@ -9,34 +9,6 @@
   actions:
     - action: shell_command.set_garage_camera_time
 
-- alias: Notify when motion in garage
-  id: Notify_when_motion_in_garage
-  mode: single
-  max_exceeded: silent
-  triggers:
-    - trigger: state
-      entity_id: binary_sensor.garage_motion_detection
-      to: "on"
-  conditions:
-    - or:
-        - condition: state
-          entity_id: binary_sensor.garage_door
-          state: "on"
-        - not:
-            - condition: state
-              entity_id: alarm_control_panel.home_alarm
-              state: "disarmed"
-  actions:
-    - action: camera.snapshot
-      data:
-        entity_id: camera.garage
-        filename: /media/garage.jpg
-    - action: notify.yan
-      data:
-        message: "Garage - motion detected"
-        data:
-          attachment: /media/garage.jpg
-
 - alias: Garage door button pushed
   id: Garage_door_button_pushed
   mode: single

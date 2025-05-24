@@ -2,10 +2,11 @@
 - alias: Camera object detected notification
   id: Camera_object_detected_notification
   use_blueprint:
-    path: SgtBatten/Stable.yaml
+    path: SgtBatten/Stable_custom.yaml
     input:
       presence_filter:
         - ""
+      sticky: true
       camera:
         - camera.parking
         - camera.backyard
@@ -14,5 +15,17 @@
       base_url: !secret homeassistant_base_url
       alert_once: true
       cooldown: 5
-      url_3: /ccab4aaf_frigate-proxy/dashboard
-      button_3: Frigate
+      url_2: /ccab4aaf_frigate-proxy/dashboard
+      button_2: Frigate
+      url_3: custom-{{ this.entity_id }}
+      button_3: Ack
+      custom_action_manual:
+        - action: rest_command.frigate_set_reviewed
+          metadata: {}
+          data:
+            id: "{{ trigger.event.data.action_3_uri }}"
+        - action: notify.mobile_app_pixel_7
+          data:
+            message: "clear_notification"
+            data:
+              tag: "{{ trigger.event.data.tag }}"
