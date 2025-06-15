@@ -83,6 +83,9 @@ google_assistant:
     climate.main_floor:
       expose: true
       name: Thermostat
+    switch.nintendo:
+      expose: true
+      name: Nintendo
 
 tts:
   - platform: google_translate

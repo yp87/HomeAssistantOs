@@ -85,13 +85,13 @@ frederique_sleep:
     - action: switch.turn_on
       data:
         entity_id: switch.baby_monitor
-    - action: script.turn_on
-      data:
-        entity_id: script.white_noise_stop
-        variables:
-          media_player_id: media_player.bureau
-    - action: script.turn_on
-      data:
-        entity_id: script.white_noise_start
-        variables:
-          media_player_id: media_player.bureau
+    #- action: script.turn_on
+    #  data:
+    #    entity_id: script.white_noise_stop
+    #    variables:
+    #      media_player_id: media_player.bureau
+    #- action: script.turn_on
+    #  data:
+    #    entity_id: script.white_noise_start
+    #    variables:
+    #      media_player_id: media_player.bureau
