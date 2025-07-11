@@ -13,7 +13,7 @@ known_devices.yaml
 *alarm.yaml
 
 # Ignore frigate config
-frigate.yaml
+/frigate.yaml
 
 # Ignore storage
 .storage/
