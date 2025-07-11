@@ -7,10 +7,13 @@
 # Except YAML files in any directory
 !*.yaml
 
-# Ignore secret.yaml, known devices and alarm specifically
+# Ignore secret.yaml, known devices and alarm
 secrets.yaml
 known_devices.yaml
 *alarm.yaml
+
+# Ignore frigate config
+frigate.yaml
 
 # Ignore storage
 .storage/
