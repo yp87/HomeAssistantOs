@@ -1,0 +1,19 @@
+---
+- alias: Start frigate
+  triggers:
+    trigger: homeassistant
+    event: start
+  actions:
+    - delay: "00:01:00"
+    - action: hassio.addon_start
+      data:
+        addon: ccab4aaf_frigate-fa
+
+- alias: restart frigate
+  triggers:
+    - trigger: time
+      at: "00:00:00"
+  actions:
+    - action: hassio.addon_restart
+      data:
+        addon: ccab4aaf_frigate-fa
